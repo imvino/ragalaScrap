@@ -3,12 +3,12 @@
 	"version": "0.0.0",
 	"private": true,
 	"scripts": {
-		"start": "node movies/functions.js"
+		"start": "node movies/namesTitle.js"
 	},
 	"dependencies": {
 		"playwright": "^1.10.0"
 	},
-	"main": "movies/functions.js",
+	"main": "movies/namesTitle.js",
 	"keywords": [],
 	"author": "",
 	"license": "ISC",
