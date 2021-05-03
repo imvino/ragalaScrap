@@ -15,9 +15,9 @@ const {chromium} = require('playwright');
 
     await page.waitForSelector(`input#MainContent_txtfunctionname`);
 
+    data['movieName'] = await page.innerText(".chosen-single span");
     data['title'] = await page.$eval("input#MainContent_txtfunctionname", el => el.value)
     data['seoTitle'] = await page.$eval("input#MainContent_txtseotitle", el => el.value)
-    data['permaLink'] = await page.$eval("input#MainContent_txtpermalink", el => el.value)
     data['permaLink'] = await page.$eval("input#MainContent_txtpermalink", el => el.value)
     data['metaDescription'] = await page.$eval("textarea#MainContent_txtmetadesc", el => el.value)
     data['metaKeywords'] = await page.$eval("textarea#MainContent_txtmetakey", el => el.value)
@@ -27,7 +27,7 @@ const {chromium} = require('playwright');
     data['videoIds'] = await page.$eval("input#MainContent_txtvideo", el => el.value)
     data['updatedDate'] = await page.$eval("[name=\"ctl00$MainContent$rbupdate\"]:checked", el => el.value)
     data['active'] = await page.$eval("[name='ctl00$MainContent$rbactive']:checked", el => el.value)
-    data['movieName'] = await page.innerText(".chosen-single span");
+
 
     console.log(data);
     await browser.close();
