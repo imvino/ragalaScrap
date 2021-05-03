@@ -3,12 +3,12 @@
 	"version": "0.0.0",
 	"private": true,
 	"scripts": {
-		"start": "node LocalEvents/events.js"
+		"start": "node Admin/LocalEvents/events.js"
 	},
 	"dependencies": {
 		"playwright": "^1.10.0"
 	},
-	"main": "LocalEvents/events.js",
+	"main": "Admin/LocalEvents/events.js",
 	"keywords": [],
 	"author": "",
 	"license": "ISC",
