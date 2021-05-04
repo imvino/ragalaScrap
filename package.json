@@ -6,6 +6,8 @@
 		"start": "node Admin/LocalEvents/events.js"
 	},
 	"dependencies": {
+		"mysql2": "^2.2.5",
+		"nodemailer": "^6.6.0",
 		"playwright": "^1.10.0"
 	},
 	"main": "Admin/LocalEvents/events.js",
