@@ -25,7 +25,6 @@ function logger(msg) {
     let delCount = 100;
     let counter = 0;
     let mailCounter = 0;
-    //{headless: false, devtools: true}
 
     const browser = await chromium.launch({headless:true});
     //rid='95315' `found` is null limit 50 id BETWEEN 1 AND 100
