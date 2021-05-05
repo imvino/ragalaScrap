@@ -8,9 +8,9 @@ const log = require('log-to-file');
 const file = 'photoUrl.log';
 let selector ='select[name="ctl00$MainContent$drp_moviename"]';
 let gotoUrl='https://www.ragalahari.com/newadmin/photogalleryinfo.aspx';
-let editUrl='photogallerynewaddedit.aspx?fid=';
+let editUrl='photogallerynewaddedit.aspx?pgid=';
 let logDatabase='url_log_photos';
-let linkDatabase='movies_function';
+let linkDatabase='movies_photos';
 
 function logger(msg) {
     console.log(msg);
@@ -27,9 +27,9 @@ function logger(msg) {
     let mailCounter = 0;
     //{headless: false, devtools: true}
 
-    const browser = await chromium.launch();
+    const browser = await chromium.launch({headless:true});
     //rid='95315' `found` is null limit 50 id BETWEEN 1 AND 100
-    let ids = await database.sql("SELECT `rid` FROM `"+logDatabase+"` where `found` is null ")
+    let ids = await database.sql("SELECT `rid` FROM `"+logDatabase+"` where `found` is null")
     const context = await browser.newContext();
     logger('started')
     await user.auth(context)
@@ -43,7 +43,7 @@ function logger(msg) {
                 route.abort()
             });
 
-            await page.goto(editUrl, {timeout: timeout})
+            await page.goto(gotoUrl, {timeout: timeout})
             await page.waitForSelector(selector, {timeout: timeout});
             await page.selectOption(selector, id.toString(), {timeout: timeout});
 
@@ -61,7 +61,7 @@ function logger(msg) {
                         logger('Found ' + link.length + ' urls on ' + id)
                         let count = 'new count';
                         list.map(async (v, i) => {
-                            let function_id = v.toString().replace(editurl, '');
+                            let function_id = v.toString().replace(editUrl, '');
                             count = null;
                             count = await database.sql("SELECT count(*) as chk from `"+linkDatabase+"` WHERE `rid`='" + function_id + "'")
                             if (count[0]['chk'] === 0) {
@@ -82,7 +82,7 @@ function logger(msg) {
                 await page.close();
                 timer.endTime(start, hrstart, file)
                 logger('===============');
-                if (counter % delcount === 0) {
+                if (counter % delCount === 0) {
                     arr()
                 } else if (ids.length === 0) {
                     arr()
@@ -91,7 +91,7 @@ function logger(msg) {
             })
             // await page.goto('http://localhost/select.html', {timeout: timeout})
         } catch (e) {
-            // await context.close()
+            await context.close()
             logger(e)
             logger('errors found on id ' + id)
             sendMail(file, 'errors found on id ' + id).catch(console.error);
@@ -109,7 +109,7 @@ function logger(msg) {
             console.log(mailCounter)
             return
         }
-        ids.splice(0, delcount).map((v, i) => {
+        ids.splice(0, delCount).map((v, i) => {
             run(v.rid);
         })
     }
