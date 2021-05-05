@@ -22,11 +22,11 @@ function logger(msg) {
     var hrstart = process.hrtime()
     let list = [];
     let timeout = 600000
-    let delCount = 100;
+    let delCount = 150;
     let counter = 0;
     let mailCounter = 0;
 
-    const browser = await chromium.launch({headless:true});
+    const browser = await chromium.launch({headless:false,devtools:true});
     //rid='95315' `found` is null limit 50 id BETWEEN 1 AND 100
     let ids = await database.sql("SELECT `rid` FROM `"+logDatabase+"` where `found` is null")
     const context = await browser.newContext();
@@ -87,6 +87,18 @@ function logger(msg) {
                     arr()
                 }
 
+            })
+
+            page.on('response', (response) => {
+                console.log('response me')
+                console.log(response.status())
+            })
+            page.on("requestfailed",(request)=>{
+                if(request.url() === gotoUrl) {
+                    console.log('request failed')
+                    console.log(request.failure())
+
+                }
             })
             // await page.goto('http://localhost/select.html', {timeout: timeout})
         } catch (e) {

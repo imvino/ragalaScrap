@@ -9,8 +9,8 @@ const file = 'postergalleryinfo.log';
 let selector ='select[name="ctl00$MainContent$drp_movieexact"]';
 let gotoUrl='https://www.ragalahari.com/newadmin/postergalleryinfo.aspx';
 let editUrl='PosterGalleryNewAddEdit.aspx?pgid=';
-let logDatabase='url_log_poster';
 let linkDatabase='movies_poster';
+let find='poster';
 
 function logger(msg) {
     console.log(msg);
@@ -22,14 +22,14 @@ function logger(msg) {
     var hrstart = process.hrtime()
     let list = [];
     let timeout = 600000
-    let delCount = 80;
+    let delCount = 150;
     let counter = 0;
     let mailCounter = 0;
     //{headless: false, devtools: true}
 
-    const browser = await chromium.launch({headless:true});
-    //rid='95315' `found` is null limit 50 id BETWEEN 1 AND 100
-    let ids = await database.sql("SELECT `rid` FROM `"+logDatabase+"` where `found` is null")
+    const browser = await chromium.launch({headless:false,devtools:true});
+    //rid='95315' `found` is null limit 50 id BETWEEN 1 AND 100 `"+find+"` is null and
+    let ids = await database.sql("SELECT `rid` FROM `url_log` where `"+find+"` is null")
     const context = await browser.newContext();
     logger('started')
     await user.auth(context)
@@ -70,10 +70,10 @@ function logger(msg) {
 
                             }
                         })
-                        await database.sql("UPDATE `"+logDatabase+"` SET  `found`='" + link.length + "' WHERE `rid`=" + id)
+                        await database.sql("UPDATE `url_log` SET  `"+find+"`='" + link.length + "' WHERE `rid`=" + id)
                     } else {
                         logger('No urls found on ' + id)
-                        await database.sql("UPDATE `"+logDatabase+"` SET  `found`='" + link.length + "' WHERE `rid`=" + id)
+                        await database.sql("UPDATE `url_log` SET  `"+find+"`='" + link.length + "' WHERE `rid`=" + id)
                     }
                 } else {
                     logger('Page error => ' + id)
@@ -88,6 +88,19 @@ function logger(msg) {
                     arr()
                 }
 
+            })
+            page.on('response', (response) => {
+                if(response.url() === gotoUrl) {
+                    console.log('response me')
+                    console.log(response.status())
+                }
+            })
+            page.on("requestfailed",(request)=>{
+                if(request.url() === gotoUrl) {
+                    console.log('request failed')
+                    console.log(request.failure())
+
+                }
             })
             // await page.goto('http://localhost/select.html', {timeout: timeout})
         } catch (e) {
