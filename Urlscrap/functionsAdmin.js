@@ -24,7 +24,7 @@ function logger(msg) {
 
     const browser = await chromium.launch();
     //rid='95315' `found` is null limit 50 id BETWEEN 1 AND 100
-    let ids = await database.sql("SELECT `rid` FROM `url_log_functions` where `found` is null")
+    let ids = await database.sql("SELECT `rid` FROM `url_log_functions` where `found` is null ")
     const context = await browser.newContext();
     logger('started')
     await user.auth(context)
@@ -76,13 +76,17 @@ function logger(msg) {
                     }
                 } else {
                     logger('Page error => ' + id)
+                    sendMail('Page error => ' + file, 'Error').catch(console.error);
                 }
                 await page.close();
                 timer.endTime(start, hrstart, file)
                 logger('===============');
                 if (counter % delcount === 0) {
                     arr()
+                } else if (ids.length === 0) {
+                    arr()
                 }
+
             })
             // await page.goto('http://localhost/select.html', {timeout: timeout})
         } catch (e) {
@@ -98,8 +102,9 @@ function logger(msg) {
             mailCounter++
             if (mailCounter === 1) {
                 logger('completed')
-                sendMail(file).catch(console.error);
+                sendMail(file, 'completed').catch(console.error);
             }
+            console.log(mailCounter)
             return
         }
         ids.splice(0, delcount).map((v, i) => {
