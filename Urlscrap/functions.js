@@ -17,12 +17,12 @@ function logger(msg) {
     var hrstart = process.hrtime()
     let list = [];
     let timeout = 600000
-    let delcount = 100;
+    let delcount = 80;
     let counter = 0;
     let mailCounter = 0;
     //{headless: false, devtools: true}
 
-    const browser = await chromium.launch();
+    const browser = await chromium.launch({headless: false});
     //rid='95315' `found` is null limit 50 id BETWEEN 1 AND 100
     let ids = await database.sql("SELECT `rid` FROM `url_log_functions` where `found` is null ")
     const context = await browser.newContext();
