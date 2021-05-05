@@ -32,6 +32,7 @@ const {chromium} = require('playwright');
     data['updatedDate'] = await page.$eval("[name=\"ctl00$MainContent$rbupdate\"]:checked", el => el.value)
     data['mediaAgency'] = await page.innerText("#MainContent_drp_agency_chosen span")
     data['active'] = await page.$eval("[name=\"ctl00$MainContent$rbactive\"]:checked", el => el.value)
+    data['paid'] = await page.$eval("[name=\"ctl00$MainContent$rbpaid\"]:checked", el => el.value)
 
 
     console.log(data);
