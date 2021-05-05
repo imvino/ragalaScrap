@@ -5,19 +5,15 @@ const user = require('../../components/login');
 (async () => { //, slowMo: 50
     let start = new Date()
     let hrstart = process.hrtime()
-
-
     let timeout = 1200000
     let delcount = 100;
     let counter = 0;
 
     const browser = await chromium.launch({headless: false});
-
-   // 97321
+    // 97321
     //`working` is null
     let ids = await database.sql("SELECT `rid` FROM `starzone_filmpersonal` WHERE `working` is not null")
     const context = await browser.newContext();
-
     await user.auth(context)
 
     async function run(id) {
@@ -25,7 +21,7 @@ const user = require('../../components/login');
             let data = [];
             let column = [];
             const page = await context.newPage();
-            await page.route('**/*.{png,jpg,jpeg,js,json,svg,css,woff,woff2,ico}', route => {
+            await page.route('**/*.{png,jpg,jpeg,html,js,json,svg,css,woff,woff2,ico}', route => {
                 route.abort()
             });
             page.on('load', async () => {
@@ -37,7 +33,7 @@ const user = require('../../components/login');
                     data['category'] = await page.evaluate(() => {
                         let selected = [];
                         for (let option of document.getElementById('MainContent_lstcategory').options) {
-                            if (option.selected && option.value!='') {
+                            if (option.selected && option.value != '') {
                                 selected.push(parseInt(option.value));
                             }
                         }
@@ -74,7 +70,7 @@ const user = require('../../components/login');
                     data['metaKeywords'] = await page.$eval("textarea#MainContent_txtmetakey", el => el.value)
                     data['profile'] = await page.$eval("[name=\"ctl00$MainContent$FCKeditor1\"]", el => el.value)
                     data['active'] = await page.$eval("[name=\"ctl00$MainContent$rbactive\"]:checked", el => el.value)
-                   // console.log(data)
+                    // console.log(data)
                     let colList = Object.keys(data)
                     colList.map((v, i) => {
                         column[i] = "`" + v + "`=NULLIF('" + data[v] + "', '')";
@@ -87,7 +83,7 @@ const user = require('../../components/login');
                     await database.sql("UPDATE `starzone_filmpersonal` SET  `working`='0' WHERE `rid`=" + id)
 
                 }
-               // await page.close();
+                // await page.close();
                 timer.endTime(start, hrstart)
                 console.log('===============');
                 if (counter % delcount === 0) {
@@ -103,6 +99,7 @@ const user = require('../../components/login');
             return
         }
     }
+
     async function arr() {
         if (ids.length === 0) {
             console.log('completed')
@@ -111,5 +108,6 @@ const user = require('../../components/login');
             run(v.rid);
         })
     }
+
     arr()
 })();

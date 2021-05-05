@@ -1,5 +1,5 @@
 const nodemailer = require("nodemailer");
-async function sendMail(req) {
+async function sendMail(msg) {
     let transporter = nodemailer.createTransport({
         host: "smtp.gmail.com",
         port: 587,
@@ -13,20 +13,18 @@ async function sendMail(req) {
         }
     });
     let info = await transporter.sendMail({
-        from: req.from, // sender address
-        to: req.to, // list of receivers
-        subject: req.subject, // Subject line
-        //text: "Hello world?", // plain text body
-        html: req.html, // html body
+        from: 'reachoutvino@gmail.com', // sender address
+        to: 'webpistol@gmail.com', // list of receivers
+        subject: 'Scrap Process Completed ', // Subject line
+        text: msg, // plain text body
+       // html: req.html, // html body
     });
     if(info.messageId){
        console.log('mail sent')
     }else{
         console.log('mail not sent')
     }
-
     //console.log("Message sent: %s", info.messageId);
     // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
 }
-
 module.exports= sendMail

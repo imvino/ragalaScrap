@@ -1,11 +1,13 @@
 lockfileVersion: 5.3
 
 specifiers:
+  log-to-file: ^2.0.2
   mysql2: ^2.2.5
   nodemailer: ^6.6.0
   playwright: ^1.10.0
 
 dependencies:
+  log-to-file: 2.0.2
   mysql2: 2.2.5
   nodemailer: 6.6.0
   playwright: 1.10.0
@@ -171,6 +173,10 @@ packages:
 
   /jpeg-js/0.4.3:
     resolution: {integrity: sha512-ru1HWKek8octvUHFHvE5ZzQ1yAsJmIvRdGWvSoKV52XKyuyYA437QWDttXT8eZXDSbuMpHlLzPDZUPd6idIz+Q==}
+    dev: false
+
+  /log-to-file/2.0.2:
+    resolution: {integrity: sha512-vEu5phQL1/RvgoPwcyiVO/GJnYiB3m5weri/I/8EUxt9yZcWHVzmpmV+cyO0EOxrWmcFZUkTcxLRWyRmYLouQA==}
     dev: false
 
   /long/4.0.0:
