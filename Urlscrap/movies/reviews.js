@@ -6,10 +6,8 @@ const user = require('../../components/login');
 const log = require('log-to-file');
 
 const file = 'reviewUrl.log';
-//let selector ='select[name="ctl00$MainContent$drp_moviename"]';
 let gotoUrl='https://www.ragalahari.com/newadmin/moviereviewinfo.aspx';
 let editUrl='moviereviewaddedit.aspx?mrid=';
-let logDatabase='url_log_reviews';
 let linkDatabase='movies_reviews';
 
 function logger(msg) {

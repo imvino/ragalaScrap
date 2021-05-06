@@ -5,26 +5,25 @@ const timer = require('../components/timer');
 const user = require('../components/login');
 const log = require('log-to-file');
 
-const file = 'functionUrl.log';
 
-function logger(msg) {
-    console.log(msg);
-    log(msg, file);
-}
-
-(async () => { //, slowMo: 50
+const main = async (data) => { //, slowMo: 50
     var start = new Date()
     var hrstart = process.hrtime()
     let list = [];
     let timeout = 600000
-    let delcount = 80;
+    let delCount = 50;
     let counter = 0;
     let mailCounter = 0;
     //{headless: false, devtools: true}
 
-    const browser = await chromium.launch({headless: false});
-    //rid='95315' `found` is null limit 50 id BETWEEN 1 AND 100
-    let ids = await database.sql("SELECT `rid` FROM `url_log_functions` where `found` is null ")
+    function logger(msg) {
+        console.log(msg);
+        log(msg, data.file);
+    }
+
+    const browser = await chromium.launch({headless:false,devtools:false});
+    //rid='95315' `found` is null limit 50 id BETWEEN 1 AND 100 `"+data.find+"` is null and
+    let ids = await database.sql("SELECT `rid` FROM `"+data.logDatabase+"` where `"+data.find+"` is null")
     const context = await browser.newContext();
     logger('started')
     await user.auth(context)
@@ -38,17 +37,16 @@ function logger(msg) {
                 route.abort()
             });
 
-            await page.goto('https://www.ragalahari.com/newadmin/functionsinfo.aspx', {timeout: timeout})
-            await page.waitForSelector('select[name="ctl00$MainContent$drp_movie"]', {timeout: timeout});
-            await page.selectOption('select[name="ctl00$MainContent$drp_movie"]', id.toString(), {timeout: timeout});
-
+            await page.goto(data.gotoUrl, {timeout: timeout})
+            await page.waitForSelector(data.selector, {timeout: timeout});
+            await page.selectOption(data.selector, id.toString(), {timeout: timeout});
+            counter++
+            logger('counter => ' + counter)
             page.on('load', async () => {
-                counter++
-                logger('counter => ' + counter)
+
                 const raga = await page.$$(`#raga`);
                 if (raga.length !== 0) {
-                    let selector = 'a.btn-info[href]'
-                    const link = await page.$$(selector);
+                    const link = await page.$$('a.btn-info[href]');
                     if (link.length !== 0) {
                         Array(link.length).fill(0).map((v, i) => {
                             list[i] = link[i].getAttribute("href")
@@ -57,42 +55,41 @@ function logger(msg) {
                         logger('Found ' + link.length + ' urls on ' + id)
                         let count = 'new count';
                         list.map(async (v, i) => {
-                            let function_id = v.toString().replace('FunctionsNewAddEdit.aspx?fid=', '');
-                            // let count = await database.sql("SELECT rid from `movies_function` WHERE `rid`=79535")
+                            let function_id = v.toString().replace(data.editUrl, '');
                             count = null;
-                            count = await database.sql("SELECT count(*) as chk from `movies_function` WHERE `rid`='" + function_id + "'")
-                            // count = await database.sql("SELECT `rid` from `movies_function` WHERE `rid`='" + function_id + "' limit 2")
-                            // if (count && count?.length === 0) {
+                            count = await database.sql("SELECT count(*) as chk from `"+data.linkDatabase+"` WHERE `rid`='" + function_id + "'")
                             if (count[0]['chk'] === 0) {
                                 logger('Inserted => ' + function_id)
-                                await database.sql("INSERT INTO `movies_function` (`rid`,`mvid`) VALUES ('" + function_id + "','" + id + "')")
+                                await database.sql("INSERT INTO `"+data.linkDatabase+"` (`rid`,`refId`) VALUES ('" + function_id + "','" + id + "')")
 
                             }
                         })
-                        await database.sql("UPDATE `url_log_functions` SET  `found`='" + link.length + "' WHERE `rid`=" + id)
+                        await database.sql("UPDATE `"+data.logDatabase+"` SET  `"+data.find+"`='" + link.length + "' WHERE `rid`=" + id)
                     } else {
                         logger('No urls found on ' + id)
-                        await database.sql("UPDATE `url_log_functions` SET  `found`='" + link.length + "' WHERE `rid`=" + id)
+                        await database.sql("UPDATE `"+data.logDatabase+"` SET  `"+data.find+"`='" + link.length + "' WHERE `rid`=" + id)
                     }
                 } else {
                     logger('Page error => ' + id)
-                    sendMail('Page error => ' + file, 'Error').catch(console.error);
+                    sendMail('Page error => ' + data.file, 'Error').catch(console.error);
                 }
                 await page.close();
-                timer.endTime(start, hrstart, file)
+                timer.endTime(start, hrstart, data.file)
                 logger('===============');
-                if (counter % delcount === 0) {
-                    arr()
-                } else if (ids.length === 0) {
-                    arr()
-                }
 
             })
+            if (counter % delCount === 0) {
+                arr()
+            } else if (ids.length === 0) {
+                arr()
+            }
+
             // await page.goto('http://localhost/select.html', {timeout: timeout})
         } catch (e) {
             // await context.close()
             logger(e)
             logger('errors found on id ' + id)
+            sendMail(data.file, 'errors found on id ' + id).catch(console.error);
             return
         }
     }
@@ -102,15 +99,17 @@ function logger(msg) {
             mailCounter++
             if (mailCounter === 1) {
                 logger('completed')
-                sendMail(file, 'completed').catch(console.error);
+                sendMail(data.file, 'completed').catch(console.error);
             }
             console.log(mailCounter)
             return
         }
-        ids.splice(0, delcount).map((v, i) => {
+        ids.splice(0, delCount).map((v, i) => {
             run(v.rid);
         })
     }
 
     arr()
-})();
+};
+
+module.exports = main
