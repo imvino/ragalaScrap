@@ -1,4 +1,4 @@
-const core = require('../core');
+const core = require('../core_countList');
 
 let data = {
     file: 'functionUrl.log',
@@ -8,6 +8,9 @@ let data = {
     linkDatabase: 'movies_function',
     logDatabase: 'url_log_movies',
     find: 'function',
+    limit: 5,
+    offset: 0,
+    array:0
 }
 
 core(data)

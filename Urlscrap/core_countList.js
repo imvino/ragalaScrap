@@ -11,19 +11,20 @@ const main = async (data) => { //, slowMo: 50
     var hrstart = process.hrtime()
     let list = [];
     let timeout = 600000
-    let delCount = 50;
+    let delCount = 25;
     let counter = 0;
     let mailCounter = 0;
     //{headless: false, devtools: true}
 
     function logger(msg) {
-        console.log(msg);
-        log(msg, data.file);
+        console.log('browser'+data.array+' => '+msg);
+        log('browser'+data.array+' => '+msg, data.file);
     }
 
     const browser = await chromium.launch({headless:false,devtools:false});
     //rid='95315' `found` is null limit 50 id BETWEEN 1 AND 100 `"+data.find+"` is null and
-    let ids = await database.sql("SELECT `rid` FROM `"+data.logDatabase+"` where `"+data.find+"` is null")
+    //OFFSET 1000
+    let ids = await database.sql("SELECT `rid` FROM `"+data.logDatabase+"` where `"+data.find+"` is null LIMIT "+data.limit+" OFFSET "+data.offset)
     const context = await browser.newContext();
     logger('started')
     await user.auth(context)

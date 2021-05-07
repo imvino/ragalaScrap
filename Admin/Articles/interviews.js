@@ -7,19 +7,21 @@ const {chromium} = require('playwright');
 
     const browser = await chromium.launch({headless: false});
     const page = await browser.newPage();
-    await page.goto('https://www.ragalahari.com/newadmin/Login.aspx');
-    await page.fill('input#Login1_UserName', 'suresh');
-    await page.fill('input#Login1_Password', 'Bujjinana99 ');
-    await page.click('input#Login1_LoginButton');
-    await page.goto('https://www.ragalahari.com/newadmin/InterviewsAddEdit.aspx?intrvid=1603');
+    // await page.goto('https://www.ragalahari.com/newadmin/Login.aspx');
+    // await page.fill('input#Login1_UserName', 'suresh');
+    // await page.fill('input#Login1_Password', 'Bujjinana99 ');
+    // await page.click('input#Login1_LoginButton');
+
+    await page.route('**/*.{png,jpg,jpeg,js,json,svg,css,woff,woff2,ico}', route => {
+        route.abort()
+    });
+    await page.goto('http://localhost/interview.html');
+
+    await page.waitForSelector(`select[name="ctl00$MainContent$drp_fp"]`, {timeout:2000});
 
 
-
-    await page.waitForSelector(`#MainContent_drp_fp_chosen span`);
-
-
-    data['filmPersonal'] = await page.innerText("#MainContent_drp_fp_chosen span")
-    data['movieName'] = await page.innerText("#MainContent_drp_movie_chosen span")
+    data['filmPersonal'] = await page.$eval('[name="ctl00$MainContent$drp_fp"]',el => el.value)
+    data['movieName'] = await page.$eval('[name="ctl00$MainContent$drp_movie"]',el => el.value)
     data['title'] = await page.$eval("input#MainContent_txttitle", el => el.value)
     data['interviewImage'] = await page.$eval("input#MainContent_txtimage", el => el.value)
     data['seoTitle'] = await page.$eval("input#MainContent_txtseotitle", el => el.value)

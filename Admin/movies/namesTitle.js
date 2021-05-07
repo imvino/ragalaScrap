@@ -10,41 +10,64 @@ const {chromium} = require('playwright');
 
     const browser = await chromium.launch({headless: false});
     const page = await browser.newPage();
-    await page.goto('https://www.ragalahari.com/newadmin/Login.aspx');
-    await page.fill('input#Login1_UserName', 'suresh');
-    await page.fill('input#Login1_Password', 'Bujjinana99 ');
-    await page.click('input#Login1_LoginButton')
-    await page.goto('https://www.ragalahari.com/newadmin/MovieInfoAddEdit.aspx?mid=96151');
-
-    await page.waitForSelector(`#MainContent_lstfp_chosen ul.chosen-choices`);
-
-    const ele_filmPersonals = await page.$$("#MainContent_lstfp_chosen span");
-    Array(ele_filmPersonals.length).fill(0).map((v, i) => {
-        [filmPersonals[i]] = ([ele_filmPersonals[i].innerText()]);
+    // await page.goto('https://www.ragalahari.com/newadmin/Login.aspx');
+    // await page.fill('input#Login1_UserName', 'suresh');
+    // await page.fill('input#Login1_Password', 'Bujjinana99 ');
+    // await page.click('input#Login1_LoginButton')
+    await page.route('**/*.{png,jpg,jpeg,js,json,svg,css,woff,woff2,ico}', route => {
+        route.abort()
     });
+    await page.goto('http://localhost/movie.html');
 
-    const ele_genere = await page.$$("#MainContent_lsttype_chosen span");
-    Array(ele_genere.length).fill(0).map((v, i) => {
-        [genere[i]] = ([ele_genere[i].innerText()]);
-    });
+    await page.waitForSelector(`[name="ctl00$MainContent$txtname"]`, {timeout:2000});
 
-    const ele_ottPlat = await page.$$("#MainContent_lstottplatform_chosen span");
-    Array(ele_ottPlat.length).fill(0).map((v, i) => {
-        [ottPlatform[i]] = ([ele_ottPlat[i].innerText()]);
-    });
+    // const ele_filmPersonals = await page.$$('[name="ctl00$MainContent$lstfp"]');
+    // Array(ele_filmPersonals.length).fill(0).map((v, i) => {
+    //     [filmPersonals[i]] = ([ele_filmPersonals[i].innerText()]);
+    // });
+    //
+    // const ele_genere = await page.$$('[name="ctl00$MainContent$lsttype"]');
+    // Array(ele_genere.length).fill(0).map((v, i) => {
+    //     [genere[i]] = ([ele_genere[i].innerText()]);
+    // });
+    //
+    // const ele_ottPlat = await page.$$('[name="ctl00$MainContent$lstottplatform"]');
+    // Array(ele_ottPlat.length).fill(0).map((v, i) => {
+    //     [ottPlatform[i]] = ([ele_ottPlat[i].$eval()]);
+    // });
+
 
 
     data['movieName'] = await page.$eval("input#MainContent_txtname", el => el.value)
     data['language'] = await page.$eval("select#MainContent_txtlanguage", el => el.value)
     data['rating'] = await page.$eval("select#MainContent_txtContentRating", el => el.value)
-    data['filmPersonals'] = await Promise.all(filmPersonals)
+    // data['filmPersonals'] = await Promise.all(filmPersonals)
+    data['filmPersonals'] = await page.evaluate(() => {
+        let selected = [];
+        for (let option of document.querySelector('[name="ctl00$MainContent$lstfp"]').options) {
+            if (option.selected && option.value != '') {
+                selected.push(parseInt(option.value));
+            }
+        }
+        return JSON.stringify(selected);
+    });
+
     data['banner'] = await page.$eval("input#MainContent_txtbanner", el => el.value)
     data['cast'] = await page.$eval("textarea#MainContent_txtcast", el => el.value)
     data['crew'] = await page.$eval("textarea#MainContent_txtcrew", el => el.value)
     data['music'] = await page.$eval("input#MainContent_txtmusic", el => el.value)
     data['producer'] = await page.$eval("input#MainContent_txtproducer", el => el.value)
     data['director'] = await page.$eval("input#MainContent_txtdirector", el => el.value)
-    data['genere'] = await Promise.all(genere)
+    // data['genere'] = await Promise.all(genere)
+    data['genere'] = await page.evaluate(() => {
+        let selected = [];
+        for (let option of document.querySelector('[name="ctl00$MainContent$lsttype"]').options) {
+            if (option.selected && option.value != '') {
+                selected.push(parseInt(option.value));
+            }
+        }
+        return JSON.stringify(selected);
+    });
     data['currentProgress'] = await page.$eval("textarea#MainContent_txtprogress", el => el.value)
     data['imageLink'] = await page.$eval("input#MainContent_txtimage", el => el.value)
     data['releaseDate'] = await page.$eval("input#MainContent_txtreleasedate", el => el.value)
@@ -57,7 +80,16 @@ const {chromium} = require('playwright');
     data['synopsis'] = await page.$eval("textarea#MainContent_txtsynopsis", el => el.value)
     data['trailer'] = await page.$eval("input#MainContent_txttrailer", el => el.value)
     data['ottUrls'] = await page.$eval("input#MainContent_otturl", el => el.value)
-    data['ottPlatform'] = await Promise.all(ottPlatform)
+    // data['ottPlatform'] = await Promise.all(ottPlatform)
+    data['ottPlatform'] = await page.evaluate(() => {
+        let selected = [];
+        for (let option of document.querySelector('[name="ctl00$MainContent$lstottplatform"]').options) {
+            if (option.selected && option.value != '') {
+                selected.push(parseInt(option.value));
+            }
+        }
+        return JSON.stringify(selected);
+    });
     data['active'] = await page.$eval("[name=\"ctl00$MainContent$rbactive\"]:checked", el => el.value)
     data['monthHighlight'] = await page.$eval("[name=\"ctl00$MainContent$rbmonthfocus\"]:checked", el => el.value)
     data['yearHighlight'] = await page.$eval("[name=\"ctl00$MainContent$rbyearfocus\"]:checked", el => el.value)

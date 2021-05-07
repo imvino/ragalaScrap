@@ -6,9 +6,9 @@ const user = require('../../components/login');
 const log = require('log-to-file');
 
 const file = 'reviewUrl.log';
-let gotoUrl='https://www.ragalahari.com/newadmin/moviereviewinfo.aspx';
-let editUrl='moviereviewaddedit.aspx?mrid=';
-let linkDatabase='movies_reviews';
+let gotoUrl='https://www.ragalahari.com/newadmin/LocalEventCategoryInfo.aspx';
+let editUrl='LocalEventCategoryAddEdit.aspx?fid=';
+let linkDatabase='local_events_categories';
 
 function logger(msg) {
     console.log(msg);
@@ -55,7 +55,7 @@ function logger(msg) {
                         })
                     }
                 }
-                await page.close();
+                //await page.close();
                 timer.endTime(start, hrstart, file)
                 logger('===============');
 
