@@ -14,7 +14,7 @@ const user = require('../../components/login');
     //`working` is null
     let ids = await database.sql("SELECT `rid` FROM `starzone_filmpersonal` WHERE `working` is not null")
     const context = await browser.newContext();
-    await user.auth(context)
+  //  await user.auth(context)
 
     async function run(id) {
         try {
@@ -24,6 +24,22 @@ const user = require('../../components/login');
             await page.route('**/*.{png,jpg,jpeg,html,js,json,svg,css,woff,woff2,ico}', route => {
                 route.abort()
             });
+            page.on('response', async (response) => {
+                if (response.url() === 'http://localhost/fliem.mhtml' && response.status() === 200) {
+                   // logger(response.url())
+                    console.log(response.url())
+                    console.log(response.status())
+                    // let count = await database.sql("SELECT count(*) as chk from `" + data.linkDatabase + "` WHERE `rid`='" + rid[0] + "'")
+                    // if (count[0]['chk'] === 0) {
+                    //     ids.push(rid[0])
+                    //     console.log('Inserted => ' + rid[0])
+                    //     await database.sql("INSERT INTO `" + data.linkDatabase + "` (`rid`) VALUES ('" + rid[0] + "')")
+                    // }
+                }else {
+                    console.log(response.status())
+                }
+            })
+
             page.on('load', async () => {
                 counter++
                 console.log('counter => ' + counter)
@@ -73,10 +89,13 @@ const user = require('../../components/login');
                     // console.log(data)
                     let colList = Object.keys(data)
                     colList.map((v, i) => {
-                        column[i] = "`" + v + "`=NULLIF('" + data[v] + "', '')";
+                       // column[i] = "`" + v + "`=NULLIF('" + data[v] + "', '')";
+                        column[i] = "`" + v + "`=null";
                     })
-                    console.log("UPDATE `starzone_filmpersonal` SET " + column.toString() + " , `working`='1' WHERE `rid`=" + id)
-                    await database.sql("UPDATE `starzone_filmpersonal` SET " + column.toString() + " , `working`='1' WHERE `rid`=" + id)
+                    console.log("UPDATE `starzone_filmpersonal` SET " + column.toString() + " , `working`='1' WHERE `rid`=1601")
+
+                   // await database.sql("UPDATE `starzone_filmpersonal` SET " + column.toString() + " , `working`='1' WHERE `rid`=" + id)
+                    await database.sql("UPDATE `starzone_filmpersonal` SET " + column.toString() + " , `working`='1' WHERE `rid`=4349")
                     console.log('Inserted  => ' + id)
                 } else {
                     console.log('Page error => ' + id)
@@ -90,7 +109,8 @@ const user = require('../../components/login');
                     arr()
                 }
             })
-            await page.goto('https://www.ragalahari.com/newadmin/FilmPersonalAddEdit.aspx?fpid=' + id, {timeout: timeout})
+           // await page.goto('https://www.ragalahari.com/newadmin/FilmPersonalAddEdit.aspx?fpid=' + id, {timeout: timeout})
+            await page.goto('http://localhost/fliem.mhtml', {timeout: timeout})
 
         } catch (e) {
             // await context.close()
@@ -100,14 +120,16 @@ const user = require('../../components/login');
         }
     }
 
-    async function arr() {
-        if (ids.length === 0) {
-            console.log('completed')
-        }
-        ids.splice(0, delcount).map((v, i) => {
-            run(v.rid);
-        })
-    }
+    run(4349)
 
-    arr()
+    // async function arr() {
+    //     if (ids.length === 0) {
+    //         console.log('completed')
+    //     }
+    //     ids.splice(0, delcount).map((v, i) => {
+    //         run(v.rid);
+    //     })
+    // }
+    //
+    // arr()
 })();

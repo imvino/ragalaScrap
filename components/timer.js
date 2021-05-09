@@ -1,7 +1,7 @@
 const log = require('log-to-file');
 module.exports.endTime = function (start, hrstart, file,array=null) {
     if(array){
-        array='B'+array+'=> ';
+        array=array+' => ';
     }
     let end = new Date() - start,
         hrend = process.hrtime(hrstart)
