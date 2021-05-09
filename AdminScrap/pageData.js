@@ -1,3 +1,5 @@
+var SqlString = require('sqlstring');
+
 module.exports.filmpersonals = async (page) => {
     let column=[]
     let data=[]
@@ -45,7 +47,7 @@ module.exports.filmpersonals = async (page) => {
     // console.log(data)
     let colList = Object.keys(data)
     colList.map((v, i) => {
-        column[i] = "`" + v + "`=NULLIF('" + data[v] + "', '')";
+        column[i] = "`" + v + "`=NULLIF(" + SqlString.escape(data[v]) + ", '')";
         // column[i] = "`" + v + "`=null";
     })
     return column

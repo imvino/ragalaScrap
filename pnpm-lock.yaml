@@ -5,12 +5,14 @@ specifiers:
   mysql2: ^2.2.5
   nodemailer: ^6.6.0
   playwright: ^1.10.0
+  sqlstring: ^2.3.2
 
 dependencies:
   log-to-file: 2.0.2
   mysql2: 2.2.5
   nodemailer: 6.6.0
   playwright: 1.10.0
+  sqlstring: 2.3.2
 
 packages:
 
