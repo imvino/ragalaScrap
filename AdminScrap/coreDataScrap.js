@@ -60,7 +60,7 @@ const main = async (data) => { //, slowMo: 50
                     logger('inserted => ' + id)
                     await database.sql("UPDATE `" + data.linkDatabase + "` SET " + column.toString() + " , `working`='200' WHERE `rid`=" + id)
                 } else {
-                    await database.sql("UPDATE `" + data.linkDatabase + "` SET  `working'=" + statusCode + "' WHERE `rid`=" + id)
+                    await database.sql("UPDATE `" + data.linkDatabase + "` SET  `working'='" + statusCode + "' WHERE `rid`=" + id)
                 }
                 await page.close();
 

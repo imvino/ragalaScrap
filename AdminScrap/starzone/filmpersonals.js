@@ -1,5 +1,5 @@
 const core = require('../coreDataScrap');
-let total = 250
+let total = 2967
 let split= 5
 let limit = Math.ceil(total/split)
 // offset: total+(limit*i),
