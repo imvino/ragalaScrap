@@ -21,7 +21,7 @@ const main = async (data) => { //, slowMo: 50
     const browser = await chromium.launch({headless: false, devtools: false});
     //rid='95315' `found` is null limit 50 id BETWEEN 1 AND 100 `"+data.find+"` is null and
     //OFFSET 1000
-    let ids = await database.sql("SELECT `rid` FROM `" + data.linkDatabase + "` where  rid=97126 LIMIT " + data.limit + " OFFSET " + data.offset)
+    let ids = await database.sql("SELECT `rid` FROM `" + data.linkDatabase + "` where `working` is null and rid=3761 LIMIT " + data.limit + " OFFSET " + data.offset)
     const context = await browser.newContext();
     logger('started')
     await user.auth(context)
@@ -60,7 +60,7 @@ const main = async (data) => { //, slowMo: 50
                 } else if (ids.length === 0) {
                     arr()
                 }
-                //   await page.close();
+                   await page.close();
             })
             await page.goto(data.gotoUrl + id, {timeout: timeout})
         } catch (e) {
