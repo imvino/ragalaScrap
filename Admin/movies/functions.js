@@ -17,8 +17,6 @@ const {chromium} = require('playwright');
     });
 
 
-
-
     // await page.waitForSelector(`input#MainContent_txtfunctionname`);
     page.on('load', async () => {
         data['movieName'] = await page.evaluate(() => {
@@ -45,7 +43,7 @@ const {chromium} = require('playwright');
 
 
         console.log(data);
-        await browser.close();
+        // await browser.close();
     })
     await page.goto('http://localhost/function.mhtml');
     var end = new Date() - start,

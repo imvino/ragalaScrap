@@ -7,24 +7,27 @@ const {chromium} = require('playwright');
 
     const browser = await chromium.launch({headless: false});
     const page = await browser.newPage();
-    await page.goto('https://www.ragalahari.com/newadmin/Login.aspx');
-    await page.fill('input#Login1_UserName', 'suresh');
-    await page.fill('input#Login1_Password', 'Bujjinana99 ');
-    await page.click('input#Login1_LoginButton')
-    await page.goto('https://www.ragalahari.com/newadmin/LocalEventCategoryAddEdit.aspx?fid=2205');
+    // await page.goto('https://www.ragalahari.com/newadmin/Login.aspx');
+    // await page.fill('input#Login1_UserName', 'suresh');
+    // await page.fill('input#Login1_Password', 'Bujjinana99 ');
+    // await page.click('input#Login1_LoginButton')
+
+    await page.route('**/*.{png,jpg,jpeg,html,js,json,svg,css,woff,woff2,ico}', route => {
+        route.abort()
+    });
+    // await page.waitForSelector(`input.form-control`);
+
+    page.on('load', async () => {
+        data['locationCategory'] = await page.$eval("input#MainContent_txtlocationname", el => el.value)
+        data['active'] = await page.$eval("[name=\"ctl00$MainContent$rbactive\"]:checked", el => el.value)
+        console.log(data);
+    })
 
 
 
-    await page.waitForSelector(`input.form-control`);
-
-
-    data['locationCategory'] = await page.$eval("input.form-control", el => el.value)
-    data['active'] = await page.$eval("[name=\"ctl00$MainContent$rbactive\"]:checked", el => el.value)
-
-
-
-    console.log(data);
    // await browser.close();
+
+    await page.goto('http://localhost/categories.mhtml');
 
     var end = new Date() - start,
         hrend = process.hrtime(hrstart)
