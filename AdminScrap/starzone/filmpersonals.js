@@ -1,6 +1,6 @@
 const core = require('../coreDataScrap');
 let total = 2967
-let split= 5
+let split= 10
 let limit = Math.ceil(total/split)
 // offset: total+(limit*i),
 Array(split).fill(0).map((v,i)=> {
