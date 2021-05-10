@@ -1,15 +1,15 @@
 const core = require('../coreDataScrap');
-let total = 5
-let split= 1
+let total = 10714
+let split= 2
 let limit = Math.round(total/split)
 // offset: total+(limit*i),
 // offset: limit*i,
 Array(split).fill(0).map((v,i)=> {
     let data = {
-        file: 'namesTitle.log',
-        gotoUrl: 'https://www.ragalahari.com/newadmin/MovieInfoAddEdit.aspx?mid=',
-        linkDatabase: 'movies_names_title',
-        coreDate: 'namesTitle',
+        file: 'functions.log',
+        gotoUrl: 'https://www.ragalahari.com/newadmin/FunctionsNewAddEdit.aspx?fid=',
+        linkDatabase: 'movies_function',
+        coreDate: 'moviesFunction',
         limit: limit,
         offset: limit*i,
         array: i+1,
