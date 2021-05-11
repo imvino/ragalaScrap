@@ -1,6 +1,38 @@
 var SqlString = require('sqlstring');
 
 //movies
+module.exports.moviesFunction = async (page) => {
+    let column=[]
+    let data=[]
+    data['movieName'] = await page.evaluate(() => {
+        let selected = [];
+        for (let option of document.getElementById('MainContent_drp_movie').options) {
+            if (option.selected && option.value != '') {
+                selected.push(parseInt(option.value));
+            }
+        }
+        return JSON.stringify(selected);
+    });
+    // data['movieName'] = await page.innerText(".chosen-single span");
+    data['title'] = await page.$eval("input#MainContent_txtfunctionname", el => el.value)
+    data['seoTitle'] = await page.$eval("input#MainContent_txtseotitle", el => el.value)
+    data['permaLink'] = await page.$eval("input#MainContent_txtpermalink", el => el.value)
+    data['metaDescription'] = await page.$eval("textarea#MainContent_txtmetadesc", el => el.value)
+    data['metaKeywords'] = await page.$eval("textarea#MainContent_txtmetakey", el => el.value)
+    data['imageName'] = await page.$eval("input#MainContent_txtimgname", el => el.value)
+    data['fileLocation'] = await page.$eval("input#MainContent_txtlocation", el => el.value)
+    data['description'] = await page.$eval("input#MainContent_txtdesc", el => el.value)
+    data['videoIds'] = await page.$eval("input#MainContent_txtvideo", el => el.value)
+    data['updatedDate'] = await page.$eval("[name=\"ctl00$MainContent$rbupdate\"]:checked", el => el.value)
+    data['active'] = await page.$eval("[name='ctl00$MainContent$rbactive']:checked", el => el.value)
+    // console.log(data)
+    let colList = Object.keys(data)
+    colList.map((v, i) => {
+        column[i] = "`" + v + "`=NULLIF(" + SqlString.escape(data[v]) + ", '')";
+        // column[i] = "`" + v + "`=null";
+    })
+    return column
+}
 module.exports.namesTitle = async (page) => {
     let column=[]
     let data=[]
