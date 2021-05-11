@@ -40,13 +40,24 @@ const {chromium} = require('playwright');
         data['description'] = await page.$eval("input#MainContent_txtdesc", el => el.value)
         data['videoIds'] = await page.$eval("input#MainContent_txtvideo", el => el.value)
         data['updatedDate'] = await page.$eval("[name=\"ctl00$MainContent$rbupdate\"]:checked", el => el.value)
-        data['languagesWorked'] = await page.$eval("[name=\"ctl00$MainContent$chklanguages$0\"]:checked", el => el.value)
+        // data['languagesWorked'] = await page.$eval("[name=\"ctl00$MainContent$chklanguages$0\"]:checked", el => el.value)
+        data['languagesWorked'] = await page.evaluate(() => {
+            let selected = [];
+            for (let option of document.querySelectorAll('#MainContent_chklanguages input')) {
+               console.log(option.checked)
+               console.log(option.value)
+                if (option.checked && option.value != '') {
+                    selected.push((option.value));
+                }
+            }
+            return JSON.stringify(selected);
+        });
         data['exclusiveGallery'] = await page.$eval("[name=\"ctl00$MainContent$rbexclusive\"]:checked", el => el.value)
         data['spicyGallery'] = await page.$eval("[name=\"ctl00$MainContent$rbspicy\"]:checked", el => el.value)
         data['active'] = await page.$eval("[name=\"ctl00$MainContent$rbactive\"]:checked", el => el.value)
 
 
-        console.log(data);
+        console.log(data['languagesWorked']);
         // await browser.close();
     })
 
