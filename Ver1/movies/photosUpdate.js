@@ -20,12 +20,12 @@ const {chromium} = require('playwright');
     // await page.waitForSelector(`input#MainContent_txttitle`);
     page.on('load', async () => {
         data['title'] = await page.$eval("input#MainContent_txttitle", el => el.value)
-        data['path'] = await page.innerText("#MainContent_txtserverpath")
+        data['path'] = await page.$eval('[name="ctl00$MainContent$txtimgloc"]', el => el.value)
         data['imageAltText'] = await page.$eval("input#MainContent_txtimagealt", el => el.value)
         data['imageTitleText'] = await page.$eval("input#MainContent_txtimagetitle", el => el.value)
         data['homepageTitleText'] = await page.$eval("input#MainContent_txthomepage", el => el.value)
         data['homepageTitleDropdown'] = await page.$eval("select#MainContent_drpgaltype", el => el.value)
-        data['updatedDateTime'] = await page.$eval("input#MainContent_txtadddate", el => el.value)
+        data['addedDateTime'] = await page.$eval("input#MainContent_txtadddate", el => el.value)
         data['noOfPhotosPages'] = await page.$eval("select#MainContent_drpmaxphotos", el => el.value)
         data['updatedDate'] = await page.$eval("[name=\"ctl00$MainContent$rbupdate\"]:checked", el => el.value)
 

@@ -1,6 +1,7 @@
 const database = require('../components/model');
-let find = 'events';
-let linkDatabase = 'local_events_events';
+let find = 'movieName';
+//let find = 'movieName';
+let linkDatabase = 'articles_news';
 let logDatabase = 'url_log_local';
 
 
@@ -100,7 +101,31 @@ async function count() {
 
 }
 
+async function test(){
+    let data=[]
+     data['dist'] = await database.sql("SELECT DISTINCT(working) FROM `" + linkDatabase + "` WHERE 1")
+     data['null500'] = await database.sql("SELECT count(*)  FROM `" + linkDatabase + "` WHERE `" + find + "` IS NULL AND `working` != 500")
+     data['notnull500'] = await database.sql("SELECT count(*)  FROM `" + linkDatabase + "` WHERE `" + find + "` IS not NULL AND `working` = 500")
+    data['c200'] = await database.sql("SELECT count(*)  FROM `" + linkDatabase + "` WHERE `working` = 200")
+    data['c500'] = await database.sql("SELECT count(*)  FROM `" + linkDatabase + "` WHERE  `working` = 500")
+    data['total'] = await database.sql("SELECT count(*)  FROM `" + linkDatabase + "` WHERE  1")
+    data['null'] = await database.sql("SELECT count(*)  FROM `" + linkDatabase + "` WHERE  `working` is null")
+    console.log(data)
+    if(data['null500'][0]['count(*)'] !== 0){
+        await database.sql("UPDATE `" + linkDatabase + "` SET  `working`=null  WHERE `" + find + "` IS NULL AND `working` != 500");
+        console.log('null500 -> exe')
+    }
+    if(data['notnull500'][0]['count(*)'] !== 0){
+        await database.sql("UPDATE `" + linkDatabase + "` SET  `working`=null  WHERE `" + find + "` IS not NULL AND `working` = 500");
+        console.log('notnull500 -> exe')
+    }
+    if(data['total'][0]['count(*)']!== parseInt(data['c200'][0]['count(*)']+data['c500'][0]['count(*)'])){
+        console.log('err')
+    }else{
+        console.log('ok')
+    }
 
+}
 
-count()
+test()
 

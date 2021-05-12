@@ -7,6 +7,9 @@ const {chromium} = require('playwright');
 
     const browser = await chromium.launch({headless: false});
     const page = await browser.newPage();
+    await page.route('**/*.{png,jpg,jpeg,html,js,json,svg,css,woff,woff2,ico}', route => {
+        route.abort()
+    });
     await page.goto('https://www.ragalahari.com/newadmin/Login.aspx');
     await page.fill('input#Login1_UserName', 'suresh');
     await page.fill('input#Login1_Password', 'Bujjinana99 ');
