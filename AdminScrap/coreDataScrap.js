@@ -14,19 +14,22 @@ const main = async (data) => { //, slowMo: 50
     let delCount = 25;
     let counter = 0;
     let mailCounter = 0;
-    let statusCode=404
+    let statusCode = 404
+
     function logger(msg) {
         console.log('browser' + data.array + ' => ' + msg);
         log('browser' + data.array + ' => ' + msg, data.file);
     }
+
     const browser = await chromium.launch({headless: false, devtools: false});
     //rid='95315' `found` is null limit 50 id BETWEEN 1 AND 100 `"+data.find+"` is null and
-    //OFFSET 1000
-    let ids = await database.sql("SELECT `rid` FROM `" + data.linkDatabase + "` where `working` is null  LIMIT " + data.limit + " OFFSET " + data.offset)
+    //OFFSET 1000 and rid='169619'
+    let ids = await database.sql("SELECT `rid` FROM `" + data.linkDatabase + "` where `working` is null LIMIT " + data.limit + " OFFSET " + data.offset)
     const context = await browser.newContext();
     logger('started')
     await user.auth(context)
     logger('LoggedIn')
+
     async function run(id) {
         const page = await context.newPage();
         logger('new page => ' + id)
@@ -37,7 +40,7 @@ const main = async (data) => { //, slowMo: 50
             page.on('response', async (response) => {
                 if (response.url() === data.gotoUrl + id && response.status()) {
                     logger('response => ' + response.status() + ' => ' + id)
-                    statusCode=response.status();
+                    statusCode = response.status();
                 }
             })
             page.on('close', async () => {
@@ -50,15 +53,7 @@ const main = async (data) => { //, slowMo: 50
                 } else if (ids.length === 0) {
                     arr()
                 }
-                if (ids.length === 0 && counter === data.limit) {
-                    mailCounter++
-                    if (mailCounter === 1) {
-                        timer.endTime(start, hrstart, data.file, 'browser' + data.array + ' => completed')
-                        sendMail(data.file, 'completed').catch(console.error);
-                        await context.close()
-                    }
-                    return
-                }
+
             })
             page.on('load', async () => {
                 // function goes here
@@ -66,9 +61,9 @@ const main = async (data) => { //, slowMo: 50
                 if (raga.length !== 0 && statusCode) {
                     let column = await pageData[data.coreDate](page)
                     logger('inserted => ' + id)
-                    await database.sql("UPDATE `" + data.linkDatabase + "` SET " + column.toString() + " , `working`='"+statusCode+"' WHERE `rid`=" + id)
+                    await database.sql("UPDATE `" + data.linkDatabase + "` SET " + column.toString() + " , `working`='" + statusCode + "' WHERE `rid`=" + id)
                 } else {
-                    await database.sql("UPDATE `" + data.linkDatabase + "` SET  `working'='" + statusCode + "' WHERE `rid`=" + id)
+                    await database.sql("UPDATE `" + data.linkDatabase + "` SET  `working`='" + statusCode + "' WHERE `rid`=" + id)
                 }
                 await page.close();
             })
@@ -82,11 +77,23 @@ const main = async (data) => { //, slowMo: 50
             return
         }
     }
+
     async function arr() {
+        if (ids.length === 0 && counter === data.limit || ids.length === 0 && counter === 0) {
+            mailCounter++
+            if (mailCounter === 1) {
+                timer.endTime(start, hrstart, data.file, 'browser' + data.array + ' => completed')
+              //  sendMail(data.file, 'completed').catch(console.error);
+                await context.close()
+            }
+            return
+        }
+
         ids.splice(0, delCount).map((v, i) => {
             run(v.rid);
         })
     }
+
     arr()
 };
 module.exports = main
