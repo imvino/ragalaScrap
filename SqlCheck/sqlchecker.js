@@ -1,7 +1,7 @@
 const database = require('../components/model');
-let find = 'movieName';
+let find = 'title';
 //let find = 'movieName';
-let linkDatabase = 'articles_news';
+let linkDatabase = 'articles_interviews';
 let logDatabase = 'url_log_local';
 
 

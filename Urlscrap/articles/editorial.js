@@ -1,9 +1,9 @@
 const core2 = require('../core_countWebUrl');
 
 let links = [];
-let total = 1605
-let split = 5
-let offset =0
+let total = 1295
+let split = 1
+let offset =1220
 let limit = Math.ceil(parseInt(total-offset) / split)
 
 console.log('offset on -> ' + offset)
@@ -11,15 +11,15 @@ console.log('limit on -> ' + limit)
 
 
 let data = {
-    file: 'interview.log',
-    targetUrl: 'https://www.ragalahari.com/interviews/',
-    linkDatabase: 'articles_interviews',
+    file: 'articles_editorial.log',
+    targetUrl: 'https://www.ragalahari.com/newadmin/EditorialsAddEdit.aspx?edtid=',
+    linkDatabase: 'articles_editorial',
 }
 
 
 Array(total).fill(data.targetUrl).map(async (goto, i) => {
     if (offset > i) return
-        links.push(`${goto}${i + 1}/link.aspx`);
+        links.push(`${goto}${i + 1}`);
 });
 
 for (let x = 0; x < split; x++) {
@@ -32,6 +32,6 @@ for (let x = 0; x < split; x++) {
     data['gUrls'] = gUrl
     data['array'] = x + 1
     console.log(data)
-  //  core2(data)
+    core2(data)
 }
 
