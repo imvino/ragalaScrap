@@ -10,7 +10,7 @@ const sendMail = require('../components/sendmail');
     let counter = 0;
     //devtools: true
     const browser = await chromium.launch({headless: false,});
-
+//97+122
     //let webpages = ['https://www.ragalahari.com/functions/a/search.aspx', 'https://www.ragalahari.com/functions/b/search.aspx', 'https://www.ragalahari.com/functions/c/search.aspx', 'https://www.ragalahari.com/functions/d/search.aspx', 'https://www.ragalahari.com/functions/e/search.aspx', 'https://www.ragalahari.com/functions/f/search.aspx', 'https://www.ragalahari.com/functions/g/search.aspx', 'https://www.ragalahari.com/functions/h/search.aspx', 'https://www.ragalahari.com/functions/i/search.aspx', 'https://www.ragalahari.com/functions/j/search.aspx', 'https://www.ragalahari.com/functions/k/search.aspx', 'https://www.ragalahari.com/functions/l/search.aspx', 'https://www.ragalahari.com/functions/m/search.aspx', 'https://www.ragalahari.com/functions/n/search.aspx', 'https://www.ragalahari.com/functions/o/search.aspx', 'https://www.ragalahari.com/functions/p/search.aspx', 'https://www.ragalahari.com/functions/q/search.aspx', 'https://www.ragalahari.com/functions/r/search.aspx', 'https://www.ragalahari.com/functions/s/search.aspx', 'https://www.ragalahari.com/functions/t/search.aspx', 'https://www.ragalahari.com/functions/u/search.aspx', 'https://www.ragalahari.com/functions/v/search.aspx', 'https://www.ragalahari.com/functions/w/search.aspx', 'https://www.ragalahari.com/functions/x/search.aspx', 'https://www.ragalahari.com/functions/y/search.aspx', 'https://www.ragalahari.com/functions/z/search.aspx'];
     let webpages = ['https://www.ragalahari.com/functions/a/search.aspx', 'https://www.ragalahari.com/functions/b/search.aspx', ]
     const context = await browser.newContext();

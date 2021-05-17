@@ -1,7 +1,7 @@
 const database = require('../components/model');
 let find = 'title';
 //let find = 'movieName';
-let linkDatabase = 'articles_interviews';
+let linkDatabase = 'starzone_photos';
 let logDatabase = 'url_log_local';
 
 
@@ -112,11 +112,11 @@ async function test(){
     data['null'] = await database.sql("SELECT count(*)  FROM `" + linkDatabase + "` WHERE  `working` is null")
     console.log(data)
     if(data['null500'][0]['count(*)'] !== 0){
-        await database.sql("UPDATE `" + linkDatabase + "` SET  `working`=null  WHERE `" + find + "` IS NULL AND `working` != 500");
+       // await database.sql("UPDATE `" + linkDatabase + "` SET  `working`=null  WHERE `" + find + "` IS NULL AND `working` != 500");
         console.log('null500 -> exe')
     }
     if(data['notnull500'][0]['count(*)'] !== 0){
-        await database.sql("UPDATE `" + linkDatabase + "` SET  `working`=null  WHERE `" + find + "` IS not NULL AND `working` = 500");
+      //  await database.sql("UPDATE `" + linkDatabase + "` SET  `working`=null  WHERE `" + find + "` IS not NULL AND `working` = 500");
         console.log('notnull500 -> exe')
     }
     if(data['total'][0]['count(*)']!== parseInt(data['c200'][0]['count(*)']+data['c500'][0]['count(*)'])){
@@ -127,5 +127,9 @@ async function test(){
 
 }
 
-test()
+async function articles_news() {
+   let data = await database.sql("SELECT count(*) FROM `articles_news` WHERE `rdate` IS NULL and `active`=1 ")
+    console.log(data[0]['count(*)'])
+}
 
+articles_news()
