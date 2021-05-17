@@ -94,7 +94,7 @@ async function count() {
         console.log('All good')
     } else {
         console.log(parseInt(t[0]['count(*)']) - parseInt(f[0]['SUM(`' + find + '`)']) + ' Duplicate')
-      //  await fixIt()
+        //  await fixIt()
     }
     let t3 = await database.sql("SELECT count(*) FROM `" + logDatabase + "` WHERE `" + find + "` is null")
     console.log('Pending log links= ' + t3[0]['count(*)'])
@@ -103,20 +103,20 @@ async function count() {
 
 async function test(){
     let data=[]
-     data['dist'] = await database.sql("SELECT DISTINCT(working) FROM `" + linkDatabase + "` WHERE 1")
-     data['null500'] = await database.sql("SELECT count(*)  FROM `" + linkDatabase + "` WHERE `" + find + "` IS NULL AND `working` != 500")
-     data['notnull500'] = await database.sql("SELECT count(*)  FROM `" + linkDatabase + "` WHERE `" + find + "` IS not NULL AND `working` = 500")
+    data['dist'] = await database.sql("SELECT DISTINCT(working) FROM `" + linkDatabase + "` WHERE 1")
+    data['null500'] = await database.sql("SELECT count(*)  FROM `" + linkDatabase + "` WHERE `" + find + "` IS NULL AND `working` != 500")
+    data['notnull500'] = await database.sql("SELECT count(*)  FROM `" + linkDatabase + "` WHERE `" + find + "` IS not NULL AND `working` = 500")
     data['c200'] = await database.sql("SELECT count(*)  FROM `" + linkDatabase + "` WHERE `working` = 200")
     data['c500'] = await database.sql("SELECT count(*)  FROM `" + linkDatabase + "` WHERE  `working` = 500")
     data['total'] = await database.sql("SELECT count(*)  FROM `" + linkDatabase + "` WHERE  1")
     data['null'] = await database.sql("SELECT count(*)  FROM `" + linkDatabase + "` WHERE  `working` is null")
     console.log(data)
     if(data['null500'][0]['count(*)'] !== 0){
-       // await database.sql("UPDATE `" + linkDatabase + "` SET  `working`=null  WHERE `" + find + "` IS NULL AND `working` != 500");
+        // await database.sql("UPDATE `" + linkDatabase + "` SET  `working`=null  WHERE `" + find + "` IS NULL AND `working` != 500");
         console.log('null500 -> exe')
     }
     if(data['notnull500'][0]['count(*)'] !== 0){
-      //  await database.sql("UPDATE `" + linkDatabase + "` SET  `working`=null  WHERE `" + find + "` IS not NULL AND `working` = 500");
+        //  await database.sql("UPDATE `" + linkDatabase + "` SET  `working`=null  WHERE `" + find + "` IS not NULL AND `working` = 500");
         console.log('notnull500 -> exe')
     }
     if(data['total'][0]['count(*)']!== parseInt(data['c200'][0]['count(*)']+data['c500'][0]['count(*)'])){
@@ -128,7 +128,7 @@ async function test(){
 }
 
 async function articles_news() {
-   let data = await database.sql("SELECT count(*) FROM `articles_news` WHERE `rdate` IS NULL and `active`=1 ")
+    let data = await database.sql("SELECT count(*) FROM `articles_news` WHERE `rdate` IS NULL and `active`=1 ")
     console.log(data[0]['count(*)'])
 }
 

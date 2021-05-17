@@ -1,4 +1,4 @@
-const core2 = require('../core_countWebUrl');
+const core2 = require('../core_countAdminUrl');
 
 let links = [];
 let total = 40000

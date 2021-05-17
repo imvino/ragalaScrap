@@ -48,6 +48,16 @@ const main = async (data) => {
             page.on('load', async () => {
                 counter++
                 console.log('counter => ' + counter)
+                // let edit = await page.$eval('[name="ctl00$MainContent$txttitle"]', el => el.value)
+                // if(edit !==''){
+                //     let count = await database.sql("SELECT count(*) as chk from `" + data.linkDatabase + "` WHERE `rid`='" + rid[0] + "'")
+                //     if (count[0]['chk'] === 0) {
+                //         ids.push(rid[0])
+                //         console.log('Inserted => ' + rid[0])
+                //         await database.sql("INSERT INTO `" + data.linkDatabase + "` (`rid`) VALUES ('" + rid[0] + "')")
+                //     }
+                // }
+
                 timer.endTime(start, hrstart, data.file, data.array)
                 if (counter % delCount === 0) {
                     arr()
