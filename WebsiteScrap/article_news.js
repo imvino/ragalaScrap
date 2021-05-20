@@ -33,8 +33,12 @@ const database = require('../components/model');
             })
             await page.goto(gotoUrl)
             counter++
-
             console.log('list => ' + id+' => '+counter)
+            if (counter % delCount === 0) {
+                arr()
+            } else if (ids.length === 0) {
+                arr()
+            }
         } catch (e) {
           //  await context.close()
             console.log(e)
@@ -42,8 +46,19 @@ const database = require('../components/model');
             return
         }
     }
-    ids.splice(0, delCount).map((v, i) => {
-        run(v.rid);
-    })
+
+    async function arr() {
+        if (ids.length === 0 && counter === data.limit || ids.length === 0 && counter === 0) {
+            console.log('completed')
+            return
+        }
+
+        ids.splice(0, delCount).map((v, i) => {
+            run(v.rid);
+        })
+    }
+
+    arr()
+
     // run(159897)
 })();

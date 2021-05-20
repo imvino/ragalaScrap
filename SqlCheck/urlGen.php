@@ -55,11 +55,27 @@ function starzone_photos()
 
     }
 }
-starzone_photos()
+//starzone_photos()
 // local events
 //core('local_events_events','localevents','eventname')
 //news
+function articles_news()
+{
+    $sql = "SELECT  `heading`,`permalink`,`rid`,`rdate` FROM `articles_news` WHERE 1";
+    $data = $GLOBALS['conn']->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+    foreach ($data as $value) {
+		 $time = strtotime($value['rdate']);
+		 $y = Date('Y',$time);
+		 $m = strtolower(Date('M',$time));
+        if($value['permalink']=='') {
+            echo "https://www.ragalahari.com/tollywood-news-".$y."-".$m."/" . $value['rid'] . "/" . txtcleaner($value['heading']) . ".aspx <br>";
+        }else{
+            echo "https://www.ragalahari.com/tollywood-news-".$y."-".$m."/" . $value['rid'] . "/" . txtcleaner($value['permalink']) . ".aspx <br>";
+        }
 
+    }
+}
+//articles_news()
 
 //articles
 //core('articles_press_releases','pressreleases','heading')
