@@ -496,7 +496,7 @@ module.exports.articlesNews = async (page) => {
     data['heading'] = await page.$eval("input#MainContent_txtheading", el => el.value)
     data['filmPersonals'] = await page.evaluate(() => {
         let selected = [];
-        for (let option of document.getElementById('MainContent_drp_movie').options) {
+        for (let option of document.getElementById('MainContent_lstfp').options) {
             if (option.selected && option.value != '') {
                 selected.push(parseInt(option.value));
             }

@@ -1,5 +1,5 @@
 const core = require('../coreDataScrap');
-let total = 5
+let total = 138
 let split= 1
 let limit = Math.round(total/split)
 // offset: total+(limit*i),

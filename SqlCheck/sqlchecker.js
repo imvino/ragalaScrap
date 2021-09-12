@@ -1,8 +1,8 @@
 const database = require('../components/model');
-let find = 'title';
+// let find = 'title';
 //let find = 'movieName';
-let linkDatabase = 'starzone_photos';
-let logDatabase = 'url_log_local';
+// let linkDatabase = 'local_events_events_update';
+// let logDatabase = 'url_log_local';
 
 
 async function empty() {
@@ -101,8 +101,9 @@ async function count() {
 
 }
 
-async function test(){
-    let data=[]
+async function test(linkDatabase,find) {
+    let data = []
+
     data['dist'] = await database.sql("SELECT DISTINCT(working) FROM `" + linkDatabase + "` WHERE 1")
     data['null500'] = await database.sql("SELECT count(*)  FROM `" + linkDatabase + "` WHERE `" + find + "` IS NULL AND `working` != 500")
     data['notnull500'] = await database.sql("SELECT count(*)  FROM `" + linkDatabase + "` WHERE `" + find + "` IS not NULL AND `working` = 500")
@@ -110,26 +111,54 @@ async function test(){
     data['c500'] = await database.sql("SELECT count(*)  FROM `" + linkDatabase + "` WHERE  `working` = 500")
     data['total'] = await database.sql("SELECT count(*)  FROM `" + linkDatabase + "` WHERE  1")
     data['null'] = await database.sql("SELECT count(*)  FROM `" + linkDatabase + "` WHERE  `working` is null")
+    console.log(linkDatabase)
     console.log(data)
-    if(data['null500'][0]['count(*)'] !== 0){
+
+    if (data['null500'][0]['count(*)'] !== 0) {
         // await database.sql("UPDATE `" + linkDatabase + "` SET  `working`=null  WHERE `" + find + "` IS NULL AND `working` != 500");
         console.log('null500 -> exe')
     }
-    if(data['notnull500'][0]['count(*)'] !== 0){
+    if (data['notnull500'][0]['count(*)'] !== 0) {
         //  await database.sql("UPDATE `" + linkDatabase + "` SET  `working`=null  WHERE `" + find + "` IS not NULL AND `working` = 500");
         console.log('notnull500 -> exe')
     }
-    if(data['total'][0]['count(*)']!== parseInt(data['c200'][0]['count(*)']+data['c500'][0]['count(*)'])){
+    if (data['total'][0]['count(*)'] !== parseInt(data['c200'][0]['count(*)'] + data['c500'][0]['count(*)'])) {
         console.log('err')
-    }else{
+    } else {
         console.log('ok')
     }
 
 }
 
 async function articles_news() {
-    let data = await database.sql("SELECT count(*) FROM `articles_news` WHERE `rdate` IS NULL and `active`=1 ")
+    let data = await database.sql("SELECT count(*) FROM `articles_news` WHERE `working` IS NULL ")
     console.log(data[0]['count(*)'])
 }
 
-articles_news()
+let db = [{db: 'articles_editorial', head: 'title'}, {db: 'articles_interviews', head: 'title'}, {
+    db: 'articles_news',
+    head: 'heading'
+}, {db: 'articles_press_releases', head: 'heading'}, {
+    db: 'local_events_categories',
+    head: 'locationCategory'
+}, {db: 'local_events_events', head: 'eventName'}, {
+    db: 'local_events_events_update',
+    head: 'title'
+}, {db: 'local_events_location', head: 'locationName'}, {
+    db: 'local_events_schedule',
+    head: 'eventContent'
+}, {db: 'movies_function', head: 'title'}, {db: 'movies_function_update', head: 'title'}, {
+    db: 'movies_names_title',
+    head: 'movieName'
+}, {db: 'movies_photos', head: 'title'}, {db: 'movies_photos_update', head: 'title'}, {
+    db: 'movies_poster',
+    head: 'title'
+}, {db: 'movies_reviews', head: 'title'}, {db: 'starzone_filmpersonal', head: 'name'}, {db: 'starzone_photos', head: 'title'}, {
+    db: 'starzone_photo_update',
+    head: 'title'
+}]
+
+db.map(value => {
+    test(value.db,value.head)
+})
+

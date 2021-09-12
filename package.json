@@ -6,6 +6,7 @@
 		"start": "node Ver1/LocalEvents/events.js"
 	},
 	"dependencies": {
+		"aws-sdk": "^2.985.0",
 		"log-to-file": "^2.0.2",
 		"mysql2": "^2.2.5",
 		"nodemailer": "^6.6.0",
