@@ -22,9 +22,9 @@ let counter = 0;
 let mailCounter = 0;
 let table = [
    {main: 'starzone_photos',sub:'starzone_photo_update'},
-    {main: 'local_events_events',sub:'local_events_events_update'},
-     {main: 'movies_function',sub:'movies_function_update'},
-     {main: 'movies_photos',sub:'movies_photos_update'}
+  //  {main: 'local_events_events',sub:'local_events_events_update'},
+   //   {main: 'movies_function',sub:'movies_function_update'},
+     // {main: 'movies_photos',sub:'movies_photos_update'}
     ]
 const main = async (table) => {
     let bucket = ['img.ragalahari.com', 'media.ragalahari.com', 'starzone.ragalahari.com', 'imgcdn.ragalahari.com',
@@ -41,6 +41,7 @@ const main = async (table) => {
         //console.log(ids)
         //ids.map(async val => {
         async function run(val) {
+            console.log(val)
             let sql = await database.sql("SELECT `path` FROM `"+table.sub+"` where `wasabi` is null and `working`=200 and `rid`=" + val.rid)
             console.log('started', val.rid)
             if (sql[0]?.path) {
@@ -79,7 +80,7 @@ const main = async (table) => {
                                     let imgNo = obj.Key.replace(prefix + val.imageName, '').replace('t.jpg', '')
                                     let url = val.web_url.replace('.aspx', `/image${imgNo}.aspx`);
                                     let image = 'http://' + Orgin[0] + '/' + obj.Key.replace('t.jpg', '.jpg');
-                                    let thumb = 'http://' + Orgin[0] + '/' + obj.Key;
+                                    // let thumb = 'http://' + Orgin[0] + '/' + obj.Key;
                                     // console.log(url)
                                     let sql = await database.sql("SELECT count(*) FROM `wasabi` where `url`='" + url + "'")
                                     // console.log("SELECT count(*) FROM `wasabi` where `url`='"+url+"'")
@@ -87,9 +88,8 @@ const main = async (table) => {
                                     if (sql[0]['count(*)'] == 0) {
                                         // console.log('================')
                                         // console.log(url, " >> file path")
-                                        // console.log(thumb, " >> image")
-                                        // console.log(image, " >> thumb")
-                                        let sql2 = await database.sql("INSERT INTO `wasabi`(`url`, `thumb`, `image`) VALUES ('" + url + "','" + thumb + "','" + image + "')");
+                                        // console.log(image, " >> image")
+                                        let sql2 = await database.sql("INSERT INTO `wasabi`(`url`,  `image`) VALUES ('" + url + "','" + image + "')");
                                         wasabi.push(sql2.insertId)
                                     } else {
                                         let sql2 = await database.sql("SELECT id FROM `wasabi` where `url`='" + url + "'")
@@ -147,9 +147,9 @@ const main = async (table) => {
     }
 }
 table.map(async obj=>{
-   // main(obj);  console.log(obj)
+    main(obj);  console.log(obj)
   // let o= await database.sql("update `"+obj.sub+"` set wasabi = '[]' where wasabi is NULL  OR wasabi = 'noPath' OR wasabi = 'noFile' OR wasabi = 'error'");  console.log(o)
-  let o= await database.sql("SELECT count(*) FROM `"+obj.sub+"` where wasabi = '[]'");  console.log(o[0]['count(*)'])
+ // let o= await database.sql("SELECT count(*) FROM `"+obj.sub+"` where wasabi = '[]'");  console.log(o[0]['count(*)'])
 
 })
 

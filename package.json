@@ -3,7 +3,7 @@
 	"version": "0.0.0",
 	"private": true,
 	"scripts": {
-		"start": "node Ver1/LocalEvents/events.js"
+		"start": "node Sang_PageDetails/LocalEvents/events.js"
 	},
 	"dependencies": {
 		"aws-sdk": "^2.985.0",
@@ -13,7 +13,7 @@
 		"playwright": "^1.10.0",
 		"sqlstring": "^2.3.2"
 	},
-	"main": "Ver1/LocalEvents/events.js",
+	"main": "Sang_PageDetails/LocalEvents/events.js",
 	"keywords": [],
 	"author": "",
 	"license": "ISC",
