@@ -9,7 +9,7 @@ const database = require('../components/model');
 //rid=[96451,96452,96453,96454,96462,96466,96468,96469,96474,96478,96479,96481,96483,96484,96485,96486]
 let rid=[];
 let log_db = 'url_log_local';
-let _db = 'articles_news';
+let _db = 'articles_interviews';
 let name = 'movieName';
 async function select(){
    // let g2=[];
@@ -31,7 +31,7 @@ async function select(){
 //select();
 
 async function gen(data) {
-    for(let i =164311; i <=164441; i++ ){
+    for(let i =97431; i <=97447; i++ ){
         rid.push(i)
     }
     let sql = "INSERT INTO `"+data+"`(`rid`) VALUES ("+rid.toString().replace(/,/ig,'),(')+")"
@@ -39,6 +39,6 @@ async function gen(data) {
     await database.sql(sql);
 }
 
-gen('articles_news')
+gen('starzone_filmpersonal')
 
 

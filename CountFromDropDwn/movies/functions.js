@@ -1,6 +1,6 @@
 const core = require('../core_countList');
 
-let total = 1
+let total = 50
 let split= 1
 let limit = Math.round(total/split)
 Array(split).fill(0).map((v,i)=>{

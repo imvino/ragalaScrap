@@ -22,9 +22,9 @@ let counter = 0;
 let mailCounter = 0;
 let table = [
    {main: 'starzone_photos',sub:'starzone_photo_update'},
-  //  {main: 'local_events_events',sub:'local_events_events_update'},
-   //   {main: 'movies_function',sub:'movies_function_update'},
-     // {main: 'movies_photos',sub:'movies_photos_update'}
+   {main: 'local_events_events',sub:'local_events_events_update'},
+      {main: 'movies_function',sub:'movies_function_update'},
+      {main: 'movies_photos',sub:'movies_photos_update'}
     ]
 const main = async (table) => {
     let bucket = ['img.ragalahari.com', 'media.ragalahari.com', 'starzone.ragalahari.com', 'imgcdn.ragalahari.com',
