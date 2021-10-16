@@ -1,18 +1,7 @@
 const {chromium} = require('playwright');
 const database = require('../components/model');
-function formatDate(date) {
-    var d = new Date(date),
-        month = '' + (d.getMonth() + 1),
-        day = '' + d.getDate(),
-        year = d.getFullYear();
+var format = require('../formatDT')
 
-    if (month.length < 2)
-        month = '0' + month;
-    if (day.length < 2)
-        day = '0' + day;
-
-    return [year, month, day].join('-');
-}
 const main = async (data) => {
     let counter = 0;
     const browser = await chromium.launch({headless: false,});
@@ -42,7 +31,7 @@ const main = async (data) => {
                     return document.querySelector('.gallerydate').innerText.replace('Updated on ','')
                 });
               //  let date = new Date(time)
-                await database.sql("UPDATE `"+data.linkDatabase+"` SET `rdate` = '" + formatDate(time) + "' WHERE `rid` = " + id)
+                await database.sql("UPDATE `"+data.linkDatabase+"` SET `rdate` = '" + format.formatDate(time) + "' WHERE `rid` = " + id)
                 await page.close();
             })
             await page.goto(gotoUrl)

@@ -1,7 +1,8 @@
 var SqlString = require('sqlstring');
-
+var format  = require('../../formatDT');
 //movies
 module.exports.moviesFunction = async (page) => {
+
     let column = []
     let data = []
     data['movieName'] = await page.evaluate(() => {
@@ -11,7 +12,8 @@ module.exports.moviesFunction = async (page) => {
                 selected.push(parseInt(option.value));
             }
         }
-        return JSON.stringify(selected);
+        let str= JSON.stringify(selected);
+        return str.substring(1, str.length-1);
     });
     // data['movieName'] = await page.innerText(".chosen-single span");
     data['title'] = await page.$eval("input#MainContent_txtfunctionname", el => el.value)
@@ -43,6 +45,7 @@ module.exports.moviesFunctionUpdate = async (page) => {
     data['homepageTitleText'] = await page.$eval("input#MainContent_txthomepage", el => el.value)
     data['homepageTitleDropdown'] = await page.$eval("select#MainContent_drpgaltype", el => el.value)
     data['updatedDateTime'] = await page.$eval("input#MainContent_txtadddate", el => el.value)
+    data['updatedDateTime'] = format.formatDateTime(data['updatedDateTime']);
     data['noOfPhotosPages'] = await page.$eval("select#MainContent_drpmaxphotos", el => el.value)
     data['updatedDate'] = await page.$eval("[name=\"ctl00$MainContent$rbupdate\"]:checked", el => el.value)
     let colList = Object.keys(data)
@@ -62,7 +65,8 @@ module.exports.moviePhotos = async (page) => {
                 selected.push(parseInt(option.value));
             }
         }
-        return JSON.stringify(selected);
+        let str= JSON.stringify(selected);
+        return str.substring(1, str.length-1);
     });
     data['title'] = await page.$eval("input#MainContent_txttitle", el => el.value)
     data['fileLocation'] = await page.$eval("input#MainContent_txtloc", el => el.value)
@@ -92,6 +96,7 @@ module.exports.moviePhotosUpdate = async (page) => {
     data['homepageTitleText'] = await page.$eval("input#MainContent_txthomepage", el => el.value)
     data['homepageTitleDropdown'] = await page.$eval("select#MainContent_drpgaltype", el => el.value)
     data['updatedDateTime'] = await page.$eval("input#MainContent_txtadddate", el => el.value)
+    data['updatedDateTime'] = format.formatDateTime(data['updatedDateTime']);
     data['noOfPhotosPages'] = await page.$eval("select#MainContent_drpmaxphotos", el => el.value)
     data['updatedDate'] = await page.$eval("[name=\"ctl00$MainContent$rbupdate\"]:checked", el => el.value)
     let colList = Object.keys(data)
@@ -111,7 +116,8 @@ module.exports.moviePoster = async (page) => {
                 selected.push(parseInt(option.value));
             }
         }
-        return JSON.stringify(selected);
+        let str= JSON.stringify(selected);
+        return str.substring(1, str.length-1);
     });
     data['title'] = await page.$eval("input#MainContent_txttitle", el => el.value)
     data['fileLocation'] = await page.$eval("input#MainContent_txtloc", el => el.value)
@@ -141,7 +147,8 @@ module.exports.movieReview = async (page) => {
                 selected.push(parseInt(option.value));
             }
         }
-        return JSON.stringify(selected);
+        let str= JSON.stringify(selected);
+        return str.substring(1, str.length-1);
     });
     data['title'] = await page.$eval("input#MainContent_txttitle", el => el.value)
     data['reviewImage'] = await page.$eval("input#MainContent_txtimage", el => el.value)
@@ -175,7 +182,8 @@ module.exports.namesTitle = async (page) => {
                 selected.push(parseInt(option.value));
             }
         }
-        return JSON.stringify(selected);
+        let str= JSON.stringify(selected);
+        return str.substring(1, str.length-1);
     });
     data['banner'] = await page.$eval("input#MainContent_txtbanner", el => el.value)
     data['cast'] = await page.$eval("textarea#MainContent_txtcast", el => el.value)
@@ -190,11 +198,13 @@ module.exports.namesTitle = async (page) => {
                 selected.push(option.value);
             }
         }
-        return JSON.stringify(selected);
+        let str= JSON.stringify(selected);
+        return str.substring(1, str.length-1);
     });
     data['currentProgress'] = await page.$eval("textarea#MainContent_txtprogress", el => el.value)
     data['imageLink'] = await page.$eval("input#MainContent_txtimage", el => el.value)
     data['releaseDate'] = await page.$eval("input#MainContent_txtreleasedate", el => el.value)
+    data['releaseDate'] = format.formatDate(data['releaseDate']);
     data['seoTitle'] = await page.$eval("input#MainContent_txtseotitle", el => el.value)
     if (data['seoTitle'] === '') {
         data['seoTitle'] = await page.innerText("#MainContent_hlpseotitle");
@@ -220,7 +230,8 @@ module.exports.namesTitle = async (page) => {
                 selected.push(parseInt(option.value));
             }
         }
-        return JSON.stringify(selected);
+        let str= JSON.stringify(selected);
+        return str.substring(1, str.length-1);
     });
     data['active'] = await page.$eval("[name=\"ctl00$MainContent$rbactive\"]:checked", el => el.value)
     data['monthHighlight'] = await page.$eval("[name=\"ctl00$MainContent$rbmonthfocus\"]:checked", el => el.value)
@@ -246,10 +257,12 @@ module.exports.filmpersonals = async (page) => {
                 selected.push(parseInt(option.value));
             }
         }
-        return JSON.stringify(selected);
+        let str= JSON.stringify(selected);
+        return str.substring(1, str.length-1);
     });
     data['alternateNames'] = await page.$eval("input#MainContent_txtadditionalName", el => el.value)
     data['birthday'] = await page.$eval("input#MainContent_txtbday", el => el.value)
+    data['birthday'] = format.formatDate(data['birthday']);
     data['birthPlace'] = await page.$eval("input#MainContent_txtbirthPlace", el => el.value)
     data['height'] = await page.$eval("input#MainContent_txtheight", el => el.value)
     data['weight'] = await page.$eval("input#MainContent_txtweight", el => el.value)
@@ -297,7 +310,8 @@ module.exports.starPhotos = async (page) => {
                 selected.push(parseInt(option.value));
             }
         }
-        return JSON.stringify(selected);
+        let str= JSON.stringify(selected);
+        return str.substring(1, str.length-1);
     });
     data['providerName'] = await page.$eval("select.form-control", el => el.value)
     data['title'] = await page.$eval("input#MainContent_txttitle", el => el.value)
@@ -320,7 +334,8 @@ module.exports.starPhotos = async (page) => {
                 selected.push((option.value));
             }
         }
-        return JSON.stringify(selected);
+        let str= JSON.stringify(selected);
+        return str.substring(1, str.length-1);
     });
     data['exclusiveGallery'] = await page.$eval("[name=\"ctl00$MainContent$rbexclusive\"]:checked", el => el.value)
     data['spicyGallery'] = await page.$eval("[name=\"ctl00$MainContent$rbspicy\"]:checked", el => el.value)
@@ -343,6 +358,7 @@ module.exports.starPhotosUpdate = async (page) => {
     data['homepageTitleText'] = await page.$eval("input#MainContent_txthomepage", el => el.value)
     data['homepageTitleDropdown'] = await page.$eval("select#MainContent_drpgaltype", el => el.value)
     data['addedDateTime'] = await page.$eval("input#MainContent_txtadddate", el => el.value)
+    data['addedDateTime'] = format.formatDateTime(data['addedDateTime']);
     data['noOfPhotosPages'] = await page.$eval("select#MainContent_drpmaxphotos", el => el.value)
     data['updatedDate'] = await page.$eval("[name=\"ctl00$MainContent$rbupdate\"]:checked", el => el.value)
     data['galleryType'] = await page.$eval("[name=\"ctl00$MainContent$rbgallerytype\"]:checked", el => el.value)
@@ -380,7 +396,8 @@ module.exports.localEvents = async (page) => {
                 selected.push(parseInt(option.value));
             }
         }
-        return JSON.stringify(selected);
+        let str= JSON.stringify(selected);
+        return str.substring(1, str.length-1);
     });
     data['imageName'] = await page.$eval("input#MainContent_txtimgname", el => el.value)
     data['seoTitle'] = await page.$eval("input#MainContent_txtseotitle", el => el.value)
@@ -412,6 +429,7 @@ module.exports.localEventsUpdate = async (page) => {
     data['homepageTitleText'] = await page.$eval("input#MainContent_txthomepage", el => el.value)
     data['homepageTitleDropdown'] = await page.$eval("select#MainContent_drpgaltype", el => el.value)
     data['addedDate'] = await page.$eval("input#MainContent_txtadddate", el => el.value)
+    data['addedDate'] = format.formatDateTime(data['addedDate']);
     data['noOfPhotosPages'] = await page.$eval("select#MainContent_drpmaxphotos", el => el.value)
     data['updatedDate'] = await page.$eval("[name=\"ctl00$MainContent$rbupdate\"]:checked", el => el.value)
     let colList = Object.keys(data)
@@ -431,7 +449,8 @@ module.exports.localLocation = async (page) => {
                 selected.push(parseInt(option.value));
             }
         }
-        return JSON.stringify(selected);
+        let str= JSON.stringify(selected);
+        return str.substring(1, str.length-1);
     });
     data['locationName'] = await page.$eval("input#MainContent_txtlocationname", el => el.value)
     data['seoTitle'] = await page.$eval("input#MainContent_txtseotitle", el => el.value)
@@ -446,7 +465,8 @@ module.exports.localLocation = async (page) => {
                 selected.push(parseInt(option.value));
             }
         }
-        return JSON.stringify(selected);
+        let str= JSON.stringify(selected);
+        return str.substring(1, str.length-1);
     });
     data['active'] = await page.$eval("[name=\"ctl00$MainContent$rbactive\"]:checked", el => el.value)
     let colList = Object.keys(data)
@@ -466,7 +486,8 @@ module.exports.localSchedule = async (page) => {
                 selected.push(parseInt(option.value));
             }
         }
-        return JSON.stringify(selected);
+        let str= JSON.stringify(selected);
+        return str.substring(1, str.length-1);
     });
     data['eventContent'] = await page.$eval("textarea#MainContent_txteventcnt", el => el.value)
     data['eventStartDate'] = await page.$eval("input#MainContent_txtstartdate", el => el.value)
@@ -491,7 +512,8 @@ module.exports.articlesNews = async (page) => {
                 selected.push(parseInt(option.value));
             }
         }
-        return JSON.stringify(selected);
+        let str= JSON.stringify(selected);
+        return str.substring(1, str.length-1);
     });
     data['heading'] = await page.$eval("input#MainContent_txtheading", el => el.value)
     data['filmPersonals'] = await page.evaluate(() => {
@@ -501,7 +523,8 @@ module.exports.articlesNews = async (page) => {
                 selected.push(parseInt(option.value));
             }
         }
-        return JSON.stringify(selected);
+        let str= JSON.stringify(selected);
+        return str.substring(1, str.length-1);
     });
     data['seoTitle'] = await page.$eval("input#MainContent_txtseotitle", el => el.value)
     data['permaLink'] = await page.$eval("input#MainContent_txtpermalink", el => el.value)
@@ -531,7 +554,8 @@ module.exports.pressRelease = async (page) => {
                 selected.push(parseInt(option.value));
             }
         }
-        return JSON.stringify(selected);
+        let str= JSON.stringify(selected);
+        return str.substring(1, str.length-1);
     });
     data['localLocation'] = await page.evaluate(() => {
         let selected = [];
@@ -540,7 +564,8 @@ module.exports.pressRelease = async (page) => {
                 selected.push(parseInt(option.value));
             }
         }
-        return JSON.stringify(selected);
+        let str= JSON.stringify(selected);
+        return str.substring(1, str.length-1);
     });
     data['heading'] = await page.$eval("input#MainContent_txtheading", el => el.value)
     data['pressReleaseImage'] = await page.$eval("input#MainContent_txtpressimg", el => el.value)
@@ -558,7 +583,8 @@ module.exports.pressRelease = async (page) => {
                 selected.push(parseInt(option.value));
             }
         }
-        return JSON.stringify(selected);
+        let str= JSON.stringify(selected);
+        return str.substring(1, str.length-1);
     });
     data['active'] = await page.$eval("[name=\"ctl00$MainContent$rbactive\"]:checked", el => el.value)
     data['paid'] = await page.$eval("[name=\"ctl00$MainContent$rbpaid\"]:checked", el => el.value)
@@ -579,7 +605,8 @@ module.exports.editorials = async (page) => {
                 selected.push(parseInt(option.value));
             }
         }
-        return JSON.stringify(selected);
+        let str= JSON.stringify(selected);
+        return str.substring(1, str.length-1);
     });
     data['title'] = await page.$eval("input#MainContent_txttitle", el => el.value)
     data['seoTitle'] = await page.$eval("input#MainContent_txtseotitle", el => el.value)
@@ -607,7 +634,9 @@ module.exports.interview = async (page) => {
                 selected.push(parseInt(option.value));
             }
         }
-        return JSON.stringify(selected);
+        let str= JSON.stringify(selected);
+        return str.substring(1, str.length-1);
+
     });
     // data['movieName'] = await page.$eval('[name="ctl00$MainContent$drp_movie"]', el => el.value)
     data['movieName'] = await page.evaluate(() => {
@@ -617,7 +646,8 @@ module.exports.interview = async (page) => {
                 selected.push(parseInt(option.value));
             }
         }
-        return JSON.stringify(selected);
+        let str= JSON.stringify(selected);
+        return str.substring(1, str.length-1);
     });
     data['title'] = await page.$eval("input#MainContent_txttitle", el => el.value)
     data['interviewImage'] = await page.$eval("input#MainContent_txtimage", el => el.value)

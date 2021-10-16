@@ -186,4 +186,4 @@ async function newId(db) {
     }
 }
 
-newId('starzone_photos')
+//newId('starzone_photos')

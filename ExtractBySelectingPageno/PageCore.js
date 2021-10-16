@@ -1,24 +1,13 @@
 const {chromium} = require('playwright');
 const database = require('../components/model');
 const user = require('../components/login');
+var format  = require('../formatDT');
 
 function logger(msg) {
     console.log(msg);
 }
 
-function formatDate(date) {
-    var d = new Date(date),
-        month = '' + (d.getMonth() + 1),
-        day = '' + d.getDate(),
-        year = d.getFullYear();
 
-    if (month.length < 2)
-        month = '0' + month;
-    if (day.length < 2)
-        day = '0' + day;
-
-    return [year, month, day].join('-');
-}
 const main = async (data) => { //, slowMo: 50
     let timeout = 600000
 
@@ -65,7 +54,7 @@ let v= 0;
                             let function_id = v.toString().replace(data.editUrl, '');
                             count = null;
                             count = await database.sql("SELECT count(*) as chk from `"+data.linkDatabase+"` WHERE `rid`='" + function_id + "'")
-                            let addDate = data.formatDate?formatDate(rdate[i]):rdate[i];
+                            let addDate = data.formatDate?format.formatDate(rdate[i]):rdate[i];
                             if (count[0]['chk'] === 0) {
                                 logger('Inserted => ' + function_id)
                                 await database.sql("INSERT INTO `"+data.linkDatabase+"` (`rid`,`rdate`) VALUES ('" + function_id + "','" + addDate + "')")

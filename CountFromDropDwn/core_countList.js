@@ -4,19 +4,8 @@ const database = require('../components/model');
 const timer = require('../components/timer');
 const user = require('../components/login');
 const log = require('log-to-file');
-function formatDate(date) {
-    var d = new Date(date),
-        month = '' + (d.getMonth() + 1),
-        day = '' + d.getDate(),
-        year = d.getFullYear();
+var format  = require('../formatDT');
 
-    if (month.length < 2)
-        month = '0' + month;
-    if (day.length < 2)
-        day = '0' + day;
-
-    return [year, month, day].join('-');
-}
 const main = async (data) => { //, slowMo: 50
     var start = new Date()
     var hrstart = process.hrtime()
@@ -76,7 +65,7 @@ const main = async (data) => { //, slowMo: 50
                             let function_id = v.toString().replace(data.editUrl, '');
                             count = null;
                             count = await database.sql("SELECT count(*) as chk from `"+data.linkDatabase+"` WHERE `rid`='" + function_id + "'")
-                            let addDate = data.formatDate?formatDate(rdate[i]):rdate[i];
+                            let addDate = data.formatDate?format.formatDate(rdate[i]):rdate[i];
                             if (count[0]['chk'] === 0) {
                                 logger('Inserted => ' + function_id)
                                 await database.sql("INSERT INTO `"+data.linkDatabase+"` (`rid`,`rdate`) VALUES ('" + function_id + "','" + addDate + "')")

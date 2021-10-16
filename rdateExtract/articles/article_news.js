@@ -1,23 +1,12 @@
 const {chromium} = require('playwright');
-const database = require('../components/model');
-function formatDate(date) {
-    var d = new Date(date),
-        month = '' + (d.getMonth() + 1),
-        day = '' + d.getDate(),
-        year = d.getFullYear();
+const database = require('../../components/model');
+var format = require('../../formatDT')
 
-    if (month.length < 2)
-        month = '0' + month;
-    if (day.length < 2)
-        day = '0' + day;
-
-    return [year, month, day].join('-');
-}
-(async () => {
+const main = (async () => {
     let counter = 0;
     const browser = await chromium.launch({headless: false,});
-    let delCount = 25;
-    let ids = await database.sql("SELECT `rid` FROM `articles_interviews` where `rdate` is null and `active`=1")
+    let delCount = 100;
+    let ids = await database.sql("SELECT `rid` FROM `articles_news` where `rdate` is null and `active`=1")
     const context = await browser.newContext();
     async function run(id) {
         try {
@@ -25,12 +14,12 @@ function formatDate(date) {
             await page.route('**/*.{png,jpg,jpeg,html,js,json,svg,css,woff,woff2,ico}', route => {
                 route.abort()
             });
-            let gotoUrl='https://www.ragalahari.com/celebrity-interview/'+id+'/news'
+            let gotoUrl='https://www.ragalahari.com/tollywood-news-news-news/'+id+'/news'
             page.on('response', async (response) => {
                 if (response.url() === gotoUrl && response.status()) {
                     if(response.status()===404){
                         console.log('response => ' + response.status() + ' => ' + id)
-                        await database.sql("UPDATE `articles_interviews` SET `rdate` = '2222-02-17 00:00:00' WHERE `rid` = "+id)
+                        await database.sql("UPDATE `articles_news` SET `rdate` = '2222-02-17 00:00:00' WHERE `rid` = "+id)
                         await page.close();
                     }
                 }
@@ -38,10 +27,9 @@ function formatDate(date) {
             page.on('load', async () => {
                 // function goes here
                 const time = await page.evaluate(() => {
-                    return document.querySelector('.gallerydate').innerText.replace('Updated on ','')
+                    return document.querySelector('time').getAttributeNode("datetime").value
                 });
-              //  let date = new Date(time)
-                await database.sql("UPDATE `articles_interviews` SET `rdate` = '" + formatDate(time) + "' WHERE `rid` = " + id)
+                await database.sql("UPDATE `articles_news` SET `rdate` = '" + format.formatDate(time) + "' WHERE `rid` = " + id)
                 await page.close();
             })
             await page.goto(gotoUrl)
@@ -53,7 +41,7 @@ function formatDate(date) {
                 arr()
             }
         } catch (e) {
-            //  await context.close()
+          //  await context.close()
             console.log(e)
             console.log('errors found')
             return
@@ -73,4 +61,6 @@ function formatDate(date) {
 
     arr()
 
+    // run(159897)
 })();
+module.exports = main

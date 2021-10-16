@@ -31,7 +31,7 @@ async function select(){
 //select();
 
 async function gen(data) {
-    for(let i =97431; i <=97447; i++ ){
+    for(let i =170257; i <=170272; i++ ){
         rid.push(i)
     }
     let sql = "INSERT INTO `"+data+"`(`rid`) VALUES ("+rid.toString().replace(/,/ig,'),(')+")"
@@ -39,6 +39,6 @@ async function gen(data) {
     await database.sql(sql);
 }
 
-gen('starzone_filmpersonal')
+gen('starzone_photo_update')
 
 
