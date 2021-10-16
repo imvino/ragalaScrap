@@ -491,7 +491,9 @@ module.exports.localSchedule = async (page) => {
     });
     data['eventContent'] = await page.$eval("textarea#MainContent_txteventcnt", el => el.value)
     data['eventStartDate'] = await page.$eval("input#MainContent_txtstartdate", el => el.value)
+    data['eventStartDate'] = format.formatDate(data['eventStartDate']);
     data['eventEndDate'] = await page.$eval("input#MainContent_txtenddate", el => el.value)
+    data['eventEndDate'] = format.formatDate(data['eventEndDate']);
     data['active'] = await page.$eval("[name=\"ctl00$MainContent$rbactive\"]:checked", el => el.value)
     let colList = Object.keys(data)
     colList.map((v, i) => {
