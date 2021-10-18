@@ -8,7 +8,7 @@ Array(split).fill(0).map((v,i)=> {
     let data = {
         file: 'starPhotosUpdate.log',
         gotoUrl: 'https://www.ragalahari.com/newadmin/starzoneupdatereorder.aspx?szid=',
-        linkDatabase: 'starzone_photo_update',
+        linkDatabase: 'starzone_photos_update',
         coreDate: 'starPhotosUpdate',
         limit: limit,
         offset: limit*i,

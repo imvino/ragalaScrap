@@ -132,10 +132,10 @@ async function test(linkDatabase, find) {
 async function select() {
     let data = await database.sql("SELECT `rid` FROM `starzone_photos` order by `c_date` DESC limit 1000 offset 0")
     data.map(async (v, i) => {
-        let t3 = await database.sql("SELECT count(*) FROM `starzone_photo_update` WHERE `rid`=" + v.rid)
+        let t3 = await database.sql("SELECT count(*) FROM `starzone_photos_update` WHERE `rid`=" + v.rid)
         if (t3[0]['count(*)'] == 0) {
             console.log('inserted', v.rid)
-            let t4 = await database.sql("INSERT INTO `starzone_photo_update` (`rid`) VALUES ('" + v.rid + "')")
+            let t4 = await database.sql("INSERT INTO `starzone_photos_update` (`rid`) VALUES ('" + v.rid + "')")
             console.log(t4)
         }
         if (data.length == i + 1) {
@@ -167,7 +167,7 @@ let db = [
 {db: 'movies_photos', head: 'title'}, {db: 'movies_photos_update', head: 'title'},
 { db: 'movies_poster',head: 'title' },
 {db: 'movies_reviews', head: 'title'}, {db: 'starzone_filmpersonal', head: 'name'},
- {db: 'starzone_photos', head: 'title'}, { db: 'starzone_photo_update',  head: 'title' }
+ {db: 'starzone_photos', head: 'title'}, { db: 'starzone_photos_update',  head: 'title' }
 ]
 
 // db.map(value => {

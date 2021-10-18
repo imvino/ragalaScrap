@@ -2,7 +2,7 @@ const database = require('../components/model');
 
 //'articles_news', 'articles_press_releases','local_events_events',
 // 'local_events_events_update','local_events_location','local_events_schedule','movies_function',
-// 'movies_function_update','movies_names_title','movies_photos','movies_reviews','starzone_filmpersonal','starzone_photo_update'
+// 'movies_function_update','movies_names_title','movies_photos','movies_reviews','starzone_filmpersonal','starzone_photos_update'
 
 
 //console.log(43069-42957)
@@ -39,6 +39,6 @@ async function gen(data) {
     await database.sql(sql);
 }
 
-gen('starzone_photo_update')
+gen('starzone_photos_update')
 
 

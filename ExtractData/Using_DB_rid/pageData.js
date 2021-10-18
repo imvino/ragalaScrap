@@ -191,7 +191,7 @@ module.exports.namesTitle = async (page) => {
     data['music'] = await page.$eval("input#MainContent_txtmusic", el => el.value)
     data['producer'] = await page.$eval("input#MainContent_txtproducer", el => el.value)
     data['director'] = await page.$eval("input#MainContent_txtdirector", el => el.value)
-    data['genere'] = await page.evaluate(() => {
+    data['genre'] = await page.evaluate(() => {
         let selected = [];
         for (let option of document.querySelector('[name="ctl00$MainContent$lsttype"]').options) {
             if (option.selected && option.value != '') {
@@ -404,7 +404,7 @@ module.exports.localEvents = async (page) => {
     data['permaLink'] = await page.$eval("input#MainContent_txtpermalink", el => el.value)
     data['metaDescription'] = await page.$eval("textarea#MainContent_txtmetadesc", el => el.value)
     data['metaKeywords'] = await page.$eval("textarea#MainContent_txtmetakey", el => el.value)
-    data['imgName'] = await page.$eval("input#MainContent_txtimgname", el => el.value)
+    //data['imgName'] = await page.$eval("input#MainContent_txtimgname", el => el.value)
     data['fileLocation'] = await page.$eval("input#MainContent_txtlocation", el => el.value)
     data['description'] = await page.$eval("#MainContent_txtdesc", el => el.value)
     data['videoIds'] = await page.$eval("input#MainContent_txtvideo", el => el.value)

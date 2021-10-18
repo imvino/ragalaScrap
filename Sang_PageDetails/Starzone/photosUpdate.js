@@ -34,7 +34,7 @@ const {chromium} = require('playwright');
         console.log(data);
         // await browser.close();
     })
-    await page.goto('http://localhost/starzone_photosUpdate.mhtml');
+    await page.goto('http://localhost/starzone_photos_update.mhtml');
     var end = new Date() - start,
         hrend = process.hrtime(hrstart)
     console.info('Execution time: %dms', end)
