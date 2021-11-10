@@ -1,5 +1,7 @@
 const core = require('../coreDataScrap');
-let total = 113
+module.exports.pressReleaseCms = async (page) =>
+{
+    let total = 113
 let split= 1
 let limit = Math.round(total/split)
 // offset: total+(limit*i),
@@ -17,3 +19,4 @@ Array(split).fill(0).map((v,i)=> {
     console.log(data)
     core(data)
 })
+}

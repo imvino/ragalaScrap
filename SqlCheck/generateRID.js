@@ -30,15 +30,20 @@ async function select(){
 }
 //select();
 
-async function gen(data) {
-    for(let i =170257; i <=170272; i++ ){
+async function gen(data,webid) {
+    let v = await database.sql("SELECT MAX( rid ) FROM `"+data+"`")
+    v = v[0]['MAX( rid )']+1
+    console.log(v)
+    for(let i =v; i <=webid; i++ ){
         rid.push(i)
     }
-    let sql = "INSERT INTO `"+data+"`(`rid`) VALUES ("+rid.toString().replace(/,/ig,'),(')+")"
-    console.log(sql)
-    await database.sql(sql);
+    if(rid.length !=0) {
+        let sql = "INSERT INTO `" + data + "`(`rid`) VALUES (" + rid.toString().replace(/,/ig, '),(') + ")"
+        console.log(sql)
+        // await database.sql(sql);}
+    }
 }
 
-gen('starzone_photos_update')
+gen('articles_interviews',1709)
 
 

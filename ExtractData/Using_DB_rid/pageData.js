@@ -89,7 +89,7 @@ module.exports.moviePhotos = async (page) => {
 module.exports.moviePhotosUpdate = async (page) => {
     let column = []
     let data = []
-    data['title'] = await page.$eval("input#MainContent_txttitle", el => el.value)
+    // data['title'] = await page.$eval("input#MainContent_txttitle", el => el.value)
     data['path'] = await page.innerText("#MainContent_txtserverpath")
     data['imageAltText'] = await page.$eval("input#MainContent_txtimagealt", el => el.value)
     data['imageTitleText'] = await page.$eval("input#MainContent_txtimagetitle", el => el.value)
@@ -98,7 +98,7 @@ module.exports.moviePhotosUpdate = async (page) => {
     data['updatedDateTime'] = await page.$eval("input#MainContent_txtadddate", el => el.value)
     data['updatedDateTime'] = format.formatDateTime(data['updatedDateTime']);
     data['noOfPhotosPages'] = await page.$eval("select#MainContent_drpmaxphotos", el => el.value)
-    data['updatedDate'] = await page.$eval("[name=\"ctl00$MainContent$rbupdate\"]:checked", el => el.value)
+    // data['updatedDate'] = await page.$eval("[name=\"ctl00$MainContent$rbupdate\"]:checked", el => el.value)
     let colList = Object.keys(data)
     colList.map((v, i) => {
         column[i] = "`" + v + "`=NULLIF(" + SqlString.escape(data[v]) + ", '')";
@@ -262,7 +262,8 @@ module.exports.filmpersonals = async (page) => {
     });
     data['alternateNames'] = await page.$eval("input#MainContent_txtadditionalName", el => el.value)
     data['birthday'] = await page.$eval("input#MainContent_txtbday", el => el.value)
-    data['birthday'] = format.formatDate(data['birthday']);
+    console.log('birth',data['birthday'])
+    data['birthday'] = data['birthday']?format.formatDate(data['birthday']):'';
     data['birthPlace'] = await page.$eval("input#MainContent_txtbirthPlace", el => el.value)
     data['height'] = await page.$eval("input#MainContent_txtheight", el => el.value)
     data['weight'] = await page.$eval("input#MainContent_txtweight", el => el.value)
@@ -351,7 +352,7 @@ module.exports.starPhotos = async (page) => {
 module.exports.starPhotosUpdate = async (page) => {
     let column = []
     let data = []
-    data['title'] = await page.$eval("input#MainContent_txttitle", el => el.value)
+    // data['title'] = await page.$eval("input#MainContent_txttitle", el => el.value)
     data['path'] = await page.$eval('[name="ctl00$MainContent$txtimgloc"]', el => el.value)
     data['imageAltText'] = await page.$eval("input#MainContent_txtimagealt", el => el.value)
     data['imageTitleText'] = await page.$eval("input#MainContent_txtimagetitle", el => el.value)
@@ -360,7 +361,7 @@ module.exports.starPhotosUpdate = async (page) => {
     data['addedDateTime'] = await page.$eval("input#MainContent_txtadddate", el => el.value)
     data['addedDateTime'] = format.formatDateTime(data['addedDateTime']);
     data['noOfPhotosPages'] = await page.$eval("select#MainContent_drpmaxphotos", el => el.value)
-    data['updatedDate'] = await page.$eval("[name=\"ctl00$MainContent$rbupdate\"]:checked", el => el.value)
+    // data['updatedDate'] = await page.$eval("[name=\"ctl00$MainContent$rbupdate\"]:checked", el => el.value)
     data['galleryType'] = await page.$eval("[name=\"ctl00$MainContent$rbgallerytype\"]:checked", el => el.value)
     // console.log(data)
     let colList = Object.keys(data)
@@ -422,7 +423,7 @@ module.exports.localEvents = async (page) => {
 module.exports.localEventsUpdate = async (page) => {
     let column = []
     let data = []
-    data['title'] = await page.$eval("input#MainContent_txteventname", el => el.value)
+    // data['title'] = await page.$eval("input#MainContent_txteventname", el => el.value)
     data['path'] = await page.innerText("#MainContent_txtserverpath")
     data['imageAltText'] = await page.$eval("input#MainContent_txtimagealt", el => el.value)
     data['imageTitleText'] = await page.$eval("input#MainContent_txtimagetitle", el => el.value)
@@ -431,7 +432,7 @@ module.exports.localEventsUpdate = async (page) => {
     data['addedDate'] = await page.$eval("input#MainContent_txtadddate", el => el.value)
     data['addedDate'] = format.formatDateTime(data['addedDate']);
     data['noOfPhotosPages'] = await page.$eval("select#MainContent_drpmaxphotos", el => el.value)
-    data['updatedDate'] = await page.$eval("[name=\"ctl00$MainContent$rbupdate\"]:checked", el => el.value)
+    // data['updatedDate'] = await page.$eval("[name=\"ctl00$MainContent$rbupdate\"]:checked", el => el.value)
     let colList = Object.keys(data)
     colList.map((v, i) => {
         column[i] = "`" + v + "`=NULLIF(" + SqlString.escape(data[v]) + ", '')";

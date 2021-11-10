@@ -18,7 +18,7 @@ const main = async (data) => { //, slowMo: 50
 
     function logger(msg) {
         console.log('browser' + data.array + ' => ' + msg);
-        log('browser' + data.array + ' => ' + msg, data.file);
+       // log('browser' + data.array + ' => ' + msg, data.file);
     }
 
     const browser = await chromium.launch({headless: false, devtools: false});
