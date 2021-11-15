@@ -114,9 +114,51 @@ async function newUrlGen(db) {
                 databaseCms(up)
             }
             if (i == r1.length - 1) console.log('done')
-
         })
-
+    }
+    if(db=='movies_names_title'){
+        let r1 = await databaseCms("SELECT  `rid`,`web_url`  FROM `"+db+"` WHERE `nurl` IS  NULL and working='200' order by `rid` desc");
+        if (r1.length==0) console.log(db+' over')
+        r1.map((v, i) =>{
+            let rid = v.rid
+            let url = v.web_url.replace('.aspx','')
+            if (url != '') {
+                let up = "UPDATE `"+db+"` SET `nurl` = '" + url + "' where rid=" + rid;
+                console.log(up)
+                databaseCms(up)
+            }
+            if (i == r1.length - 1) console.log('done')
+        })
+    }
+    if(db=='starzone_filmpersonal'){
+        let r1 = await databaseCms("SELECT  `rid`,`permaLink`  FROM `"+db+"` WHERE `nurl` IS  NULL and working='200' order by `rid` desc");
+        if (r1.length==0) console.log(db+' over')
+        r1.map((v, i) =>{
+            let rid = v.rid
+            let gallery = urlSlug(v.permaLink)
+            let url = `/starzone/info/${rid}/${gallery}`
+            if (url != '') {
+                let up = "UPDATE `"+db+"` SET `nurl` = '" + url + "' where rid=" + rid;
+                console.log(up)
+                databaseCms(up)
+            }
+            if (i == r1.length - 1) console.log('done')
+        })
+    }
+    if(db=='local_events_location'){
+        let r1 = await databaseCms("SELECT  `rid`,`locationName`  FROM `"+db+"` WHERE `nurl` IS  NULL and working='200' order by `rid` desc");
+        if (r1.length==0) console.log(db+' over')
+        r1.map((v, i) =>{
+            let rid = v.rid
+            let gallery = urlSlug(v.locationName)
+            let url = `/events/info/${rid}/${gallery}`
+            if (url != '') {
+                let up = "UPDATE `"+db+"` SET `nurl` = '" + url + "' where rid=" + rid;
+                console.log(up)
+                databaseCms(up)
+            }
+            if (i == r1.length - 1) console.log('done')
+        })
     }
 
 }
@@ -141,8 +183,8 @@ async function newUrlGen(db) {
 //     console.log('total',sql)
 //          }
 
-let db = ['starzone_photos', 'movies_function','movies_photos','movies_poster','local_events_events']
-newUrlGen('local_events_events')
+let db = ['starzone_photos', 'movies_function','movies_photos','movies_poster','local_events_events','movies_names_title','starzone_filmpersonal','local_events_location']
+newUrlGen('local_events_location')
 //Ocat2Ncat()
 //transferCat2Gender()
 //newId()
