@@ -1,6 +1,6 @@
 // Load the SDK
 const AWS = require('aws-sdk');
-const database = require('./components/model');
+const database = require('../components/model');
 // Connection
 // This is how you can use the .aws credentials file to fetch the credentials
 const credentials = new AWS.SharedIniFileCredentials({profile: 'wasabi'});
@@ -24,20 +24,26 @@ let table = [
    // {main: 'starzone_photos',sub:'starzone_photos_update'},
   //  {main: 'local_events_events',sub:'local_events_events_update'},
     //   {main: 'movies_function',sub:'movies_function_update'},
-       {main: 'movies_photos',sub:'movies_photos_update'}
+     //  {main: 'movies_photos',sub:'movies_photos_update'},
+       {main: 'movies_poster'}
     ]
 const main = async (table) => {
     let bucket = ['img.ragalahari.com', 'media.ragalahari.com', 'starzone.ragalahari.com', 'imgcdn.ragalahari.com',
         'www1.ragalahari.com', 'imgcdn.raagalahari.com', 'img.raagalahari.com', 'timg.raagalahari.com', 'szcdn.ragalahari.com', 'www.ragalahari.com','szcdn1.ragalahari.com']
     //'gallery.ragalahari.com',media1.ragalahari.com,74.52.160.190,media1.ragalahari.com,www.ragalahari.net,www.telugudvdshop.com
+//`wasabi` is null
+    let _webUrl = table.main == 'movies_poster'?'`permaLink`,`web_url`':'`web_url`'
 
-        let ids = await database.sql("SELECT `rid`,`web_url`,`imageName` FROM `"+table.main+"` where `wasabi` is null and `working`=200  order by rid desc")
+        let ids = await database.sql("SELECT `rid`,"+_webUrl+",`imageName` FROM `"+table.main+"` where `wasabi` is null and `working`=200  order by rid desc")
         //console.log(ids)
         //ids.map(async val => {
         async function run(val) {
             console.log(val)
-            let sql = await database.sql("SELECT `path` FROM `"+table.main+"` where `wasabi` is null and `working`=200 and `rid`=" + val.rid)
+            let selPath = table.main == 'movies_poster'?'`fileLocation` as path':'path'
+            let sql = await database.sql("SELECT "+selPath+" FROM `"+table.main+"` where `wasabi` is null and `working`=200 and `rid`=" + val.rid)
             console.log('started', val.rid)
+            //console.log('sql', sql)
+           // return
             if (sql[0]?.path) {
                 let Orgin = sql[0].path.replace(/http:\/\//gi, '').split('/')
                 let bucketName = Orgin[0] == bucket[0] || Orgin[0] == bucket[3] || Orgin[0] == bucket[4] ||
@@ -64,18 +70,27 @@ const main = async (table) => {
                         if (err) {
                             return 'There was an error viewing your album: ' + err.message
                         } else {
-                            // console.log(data.Contents,"<<<all content");
+                           //  console.log(data.Contents,"<<<all content");
                             let wasabi = []
-                            // console.log(prefix + val.imageName)
+                            let prefixUrl=(prefix +'/'+val.imageName).replace('//','/')
+                            // console.log(prefixUrl)
                             let promises = data.Contents.map(async (obj, index) => {
                                 //  console.log(data)
-                                // console.log(obj.Key, obj.Key.includes('t.jpg'), obj.Key.includes(prefix + val.imageName));
-                                if (obj.Key.includes('t.jpg') && obj.Key.includes(prefix + val.imageName)) {
-                                    let imgNo = obj.Key.replace(prefix + val.imageName, '').replace('t.jpg', '')
-                                    let url = val.web_url.replace('.aspx', `/image${imgNo}.aspx`);
+                                // console.log(obj.Key, obj.Key.includes('t.jpg'), obj.Key.includes(prefixUrl));
+                                // return
+                                if (obj.Key.includes('t.jpg') && obj.Key.includes(prefixUrl)) {
+                                    let imgNo = obj.Key.replace(prefixUrl, '').replace('t.jpg', '')
+                                    let url
+                                    if(table.main == 'movies_poster'){
+                                        url=`/posters/${val.permaLink}/${val.imageName}${imgNo}.aspx`
+                                    }else{
+                                        url = val.web_url.replace('.aspx', `/image${imgNo}.aspx`);
+                                    }
                                     let image = 'http://' + Orgin[0] + '/' + obj.Key.replace('t.jpg', '.jpg');
                                     // let thumb = 'http://' + Orgin[0] + '/' + obj.Key;
-                                    // console.log(url)
+                                    // console.log('url',url)
+                                    // console.log('image',image)
+
                                     let sql = await database.sql("SELECT count(*) FROM `wasabi` where `url`='" + url + "'")
                                     // console.log("SELECT count(*) FROM `wasabi` where `url`='"+url+"'")
                                     // console.log(sql)
@@ -135,7 +150,8 @@ const main = async (table) => {
                 return
             }
             ids.splice(0, delCount).map((v, i) => {
-                run({rid: v.rid, web_url: v.web_url, imageName: v.imageName});
+                let permaLink =v.permaLink?v.permaLink:''
+                run({rid: v.rid, web_url: v.web_url, imageName: v.imageName,permaLink:permaLink});
             })
         }
 

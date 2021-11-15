@@ -7,6 +7,7 @@ specifiers:
   nodemailer: ^6.6.0
   playwright: ^1.10.0
   sqlstring: ^2.3.2
+  url-slug: ^3.0.2
 
 dependencies:
   aws-sdk: 2.985.0
@@ -15,6 +16,7 @@ dependencies:
   nodemailer: 6.6.0
   playwright: 1.10.0
   sqlstring: 2.3.2
+  url-slug: 3.0.2
 
 packages:
 
@@ -410,6 +412,10 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       escape-string-regexp: 2.0.0
+    dev: false
+
+  /url-slug/3.0.2:
+    resolution: {integrity: sha512-puioWUGY+esk4kKW8L6fCZWb+xK1+0L/KH2miV6GEJdlCJRJ2lfRlvHkUikyEU1e1v4j1C1HBQKvuljFOxmnEA==}
     dev: false
 
   /url/0.10.3:
