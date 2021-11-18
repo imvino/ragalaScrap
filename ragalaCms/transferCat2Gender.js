@@ -107,7 +107,7 @@ async function newUrlGen(db) {
         r1.map((v, i) =>{
             let rid = v.rid
             let gallery = urlSlug(v.permaLink)
-            let url = `/events/${rid}/${gallery}`
+            let url = `/events/local-events/${rid}/${gallery}`
             if (url != '') {
                 let up = "UPDATE `"+db+"` SET `nurl` = '" + url + "' where rid=" + rid;
                 console.log(up)
@@ -184,7 +184,7 @@ async function newUrlGen(db) {
 //          }
 
 let db = ['starzone_photos', 'movies_function','movies_photos','movies_poster','local_events_events','movies_names_title','starzone_filmpersonal','local_events_location']
-newUrlGen('local_events_location')
+newUrlGen('local_events_events')
 //Ocat2Ncat()
 //transferCat2Gender()
 //newId()
