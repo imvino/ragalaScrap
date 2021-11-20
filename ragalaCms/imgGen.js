@@ -1,22 +1,7 @@
 const mysql = require('mysql2');
 const urlSlug = require('url-slug');
 
-const con_cms = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'ragalacms'
-});
-
-databaseCms = async (condition) => {
-    const result = await con_cms.promise().query(condition)
-        .then(([rows, fields]) => {
-            return rows;
-        })
-        .catch(console.log)
-    // .then( () => con.end());
-    return result
-};
+const databaseCms = require('../components/model');
 
 async function imgGen(db,image,content) {
     let r1 = await databaseCms("SELECT  `rid`,`"+content+"` FROM `"+db+"` WHERE `"+image+"` IS NULL and `"+content+"` like '%<img%' order by `rid` desc");
@@ -43,6 +28,6 @@ async function imgGen(db,image,content) {
         if (i == r1.length - 1) console.log('done')
     })
 }
-imgGen('articles_press_releases','pressReleaseImage','content')
+//imgGen('articles_press_releases','pressReleaseImage','content')
 // imgGen('articles_news','newsImage','newsItem')
 //imgGen('articles_interviews','interviewImage','interview')
