@@ -16,14 +16,14 @@ async function gen(data, webid,extDate=false) {
         if (rid.length != 0) {
             let sql = "INSERT INTO `" + data + "`(`rid`) VALUES (" + rid.toString().replace(/,/ig, '),(') + ")"
             console.log(sql)
-            let sql2 = await database.sql(sql);
-            console.log(sql2)
+         //   let sql2 = await database.sql(sql);
+          //  console.log(sql2)
         } else {
             console.log('not inserted')
         }
 
         let total = rid.length?rid.length:150
-    let split= 1
+    let split= 5
     let limit = Math.round(total/split)
     Array(split).fill(0).map((v,i)=> {
         let data = {

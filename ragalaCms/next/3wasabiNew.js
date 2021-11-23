@@ -21,11 +21,11 @@ let delCount = 15;
 let counter = 0;
 let mailCounter = 0;
 let table = [
-   // {main: 'starzone_photos',sub:'starzone_photos_update'},
+    {main: 'starzone_photos',sub:'starzone_photos_update'},
   //  {main: 'local_events_events',sub:'local_events_events_update'},
-    //   {main: 'movies_function',sub:'movies_function_update'},
-     //  {main: 'movies_photos',sub:'movies_photos_update'},
-       {main: 'movies_poster'}
+   //   {main: 'movies_function',sub:'movies_function_update'},
+    //   {main: 'movies_photos',sub:'movies_photos_update'},
+     //  {main: 'movies_poster'}
     ]
 const main = async (table) => {
     let bucket = ['img.ragalahari.com', 'media.ragalahari.com', 'starzone.ragalahari.com', 'imgcdn.ragalahari.com',
@@ -72,7 +72,7 @@ const main = async (table) => {
                         } else {
                            //  console.log(data.Contents,"<<<all content");
                             let wasabi = []
-                            let prefixUrl=(prefix +'/'+val.imageName).replace('//','/')
+                            let prefixUrl=(prefix +'/'+val.imageName)?.replace('//','/')
                             // console.log(prefixUrl)
                             let promises = data.Contents.map(async (obj, index) => {
                                 //  console.log(data)
@@ -84,7 +84,7 @@ const main = async (table) => {
                                     if(table.main == 'movies_poster'){
                                         url=`/posters/${val.permaLink}/${val.imageName}${imgNo}.aspx`
                                     }else{
-                                        url = val.web_url.replace('.aspx', `/image${imgNo}.aspx`);
+                                        url = val.web_url?.replace('.aspx', `/image${imgNo}.aspx`);
                                     }
                                     let image = 'http://' + Orgin[0] + '/' + obj.Key.replace('t.jpg', '.jpg');
                                     // let thumb = 'http://' + Orgin[0] + '/' + obj.Key;
@@ -97,6 +97,7 @@ const main = async (table) => {
                                     if (sql[0]['count(*)'] == 0) {
                                         // console.log('================')
                                         // console.log(url, " >> file path")
+                                        console.log("INSERT INTO `wasabi`(`url`,  `image`) VALUES ('" + url + "','" + image + "')")
                                         // console.log(image, " >> image")
                                         let sql2 = await database.sql("INSERT INTO `wasabi`(`url`,  `image`) VALUES ('" + url + "','" + image + "')");
                                         wasabi.push(sql2.insertId)

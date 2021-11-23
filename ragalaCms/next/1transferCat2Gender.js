@@ -51,6 +51,7 @@ async function transferCat2Gender() {
         console.log(r2)
     })
 }
+transferCat2Gender()
 
 
 
