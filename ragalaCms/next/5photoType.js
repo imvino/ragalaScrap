@@ -52,7 +52,7 @@ async function genre(){
         return k != undefined ? k : null
     }
 //["Mystery","Romance","Thriller"]
-    let r1 = await databaseCms.sql("SELECT  `rid`,`genre`  FROM `movies_names_title` WHERE `genre` LIKE '%\"%' order by `rid` desc");
+    let r1 = await databaseCms.sql("SELECT  `rid`,`genre`  FROM `movies_names_title` WHERE `genre` LIKE '%\"%' or genre  LIKE '%[%' order by `rid` desc");
     if (r1.length == 0) console.log('genre over')
     console.log((r1.length))
     r1.map((v, i) => {
