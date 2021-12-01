@@ -285,6 +285,7 @@ module.exports.filmpersonals = async (page) => {
     data['netWorth'] = await page.$eval("input#MainContent_txtnetWorth", el => el.value)
     data['productionHouse'] = await page.$eval("input#MainContent_txtmemberOf", el => el.value)
     data['expiredDate'] = await page.$eval("input#MainContent_txtexpired", el => el.value)
+    data['expiredDate'] = data['expiredDate']?format.formatDate(data['expiredDate']):'';
     data['expiredPlace'] = await page.$eval("input#MainContent_txtdeathPlace", el => el.value)
     data['thumbnail'] = await page.$eval("input#MainContent_txtthumbnail", el => el.value)
     data['seoTitle'] = await page.$eval("input#MainContent_txtseotitle", el => el.value)

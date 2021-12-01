@@ -44,7 +44,6 @@ gender = 1
 
    await databaseCms.sql("UPDATE `starzone_photos` SET `providerName` = NULL where providerName='-1'")
 }
-
 async function genre(){
     let list = ['Action','Adventure','Animation','Biography','Comedy','Crime','Documentary','Drama','Family','Fantasy','Film-Noir','History','Horror','Musical','Mystery','Romance','Sci-Fi','Short','Sport','Thriller','War','Western']
     function rmv(s){
@@ -80,8 +79,20 @@ async function genre(){
         }
     })
 }
+async function expiredDate(){
+    let r1 = await databaseCms.sql("SELECT  `rid`,`expiredDate`  FROM `starzone_filmpersonal` WHERE `expiredDate`  IS NOT NULL and expDate is null order by `rid` desc");
+    console.log(r1)
+    r1.map(v=>{
+        const d = new Date(v.expiredDate);
+        let day = d.getDate();
+        let month = d.getMonth() + 1;
+        let year = d.getFullYear()
+        databaseCms.sql(`UPDATE starzone_filmpersonal SET expDate = '${year}-${month}-${day}' where rid='${v.rid}'`)
+    })
+}
 
-  //  photoType('movies_photos')
+    photoType('movies_photos')
 //starGender('starzone_photos')
-genre()
+//genre()
+
 
