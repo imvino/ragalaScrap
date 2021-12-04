@@ -90,9 +90,17 @@ async function expiredDate(){
         databaseCms.sql(`UPDATE starzone_filmpersonal SET expDate = '${year}-${month}-${day}' where rid='${v.rid}'`)
     })
 }
-
-    photoType('movies_photos')
+async function highlight(){
+    let db = ['starzone_photos', 'movies_function', 'movies_photos', 'movies_poster', 'local_events_events', 'movies_names_title',
+        'starzone_filmpersonal',  'movies_reviews', 'articles_press_releases', 'articles_editorial'
+        ,'articles_interviews','articles_news']
+    db.map(async v=>{
+      let r = await databaseCms.sql(`UPDATE ${v} SET highlight = '0' where highlight is null` )
+        console.log(r.affectedRows)
+   })
+}
+   // photoType('movies_photos')
 //starGender('starzone_photos')
 //genre()
-
+highlight()
 
