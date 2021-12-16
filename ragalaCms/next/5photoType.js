@@ -79,17 +79,17 @@ async function genre(){
         }
     })
 }
-async function expiredDate(){
-    let r1 = await databaseCms.sql("SELECT  `rid`,`expiredDate`  FROM `starzone_filmpersonal` WHERE `expiredDate`  IS NOT NULL and expDate is null order by `rid` desc");
-    console.log(r1)
-    r1.map(v=>{
-        const d = new Date(v.expiredDate);
-        let day = d.getDate();
-        let month = d.getMonth() + 1;
-        let year = d.getFullYear()
-        databaseCms.sql(`UPDATE starzone_filmpersonal SET expDate = '${year}-${month}-${day}' where rid='${v.rid}'`)
-    })
-}
+// async function expiredDate(){
+//     let r1 = await databaseCms.sql("SELECT  `rid`,`expiredDate`  FROM `starzone_filmpersonal` WHERE `expiredDate`  IS NOT NULL and expDate is null order by `rid` desc");
+//     console.log(r1)
+//     r1.map(v=>{
+//         const d = new Date(v.expiredDate);
+//         let day = d.getDate();
+//         let month = d.getMonth() + 1;
+//         let year = d.getFullYear()
+//         databaseCms.sql(`UPDATE starzone_filmpersonal SET expDate = '${year}-${month}-${day}' where rid='${v.rid}'`)
+//     })
+// }
 async function highlight(){
     let db = ['starzone_photos', 'movies_function', 'movies_photos', 'movies_poster', 'local_events_events', 'movies_names_title',
         'starzone_filmpersonal',  'movies_reviews', 'articles_press_releases', 'articles_editorial'
@@ -99,8 +99,9 @@ async function highlight(){
         console.log(r.affectedRows)
    })
 }
-   // photoType('movies_photos')
+
+//photoType('movies_photos')
 //starGender('starzone_photos')
 //genre()
-highlight()
+//highlight()
 

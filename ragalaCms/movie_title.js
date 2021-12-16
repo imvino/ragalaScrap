@@ -16,8 +16,8 @@ async function gen(data, webid,extDate=false) {
         if (rid.length != 0) {
             let sql = "INSERT INTO `" + data + "`(`rid`) VALUES (" + rid.toString().replace(/,/ig, '),(') + ")"
             console.log(sql)
-         //   let sql2 = await database.sql(sql);
-          //  console.log(sql2)
+          let sql2 = await database.sql(sql);
+           console.log(sql2)
         } else {
             console.log('not inserted')
         }
@@ -41,7 +41,7 @@ async function gen(data, webid,extDate=false) {
 
 }
 
-gen('movies_names_title', 96541)
+gen('movies_names_title', 96562,true)
 
 
 

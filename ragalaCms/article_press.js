@@ -60,7 +60,7 @@ async function gen(data, webid, extDate = false) {
 
 }
 
-gen('articles_press_releases', 43073, true)
+gen('articles_press_releases', 43074, true)
 
 
 

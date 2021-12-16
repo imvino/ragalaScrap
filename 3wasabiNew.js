@@ -1,6 +1,6 @@
 // Load the SDK
 const AWS = require('aws-sdk');
-const database = require('../../components/model');
+const database = require('./components/model');
 // Connection
 // This is how you can use the .aws credentials file to fetch the credentials
 const credentials = new AWS.SharedIniFileCredentials({profile: 'wasabi'});

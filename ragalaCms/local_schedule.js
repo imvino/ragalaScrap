@@ -56,7 +56,7 @@ function rdate(){
     })
 }
 
-gen('local_events_schedule', 2192,true)
+gen('local_events_schedule', 2199,true)
 
 
 

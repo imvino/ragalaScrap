@@ -69,12 +69,12 @@ async function newUrlGen(db) {
         })
     }
     if (db == 'movies_names_title') {
-        let r1 = await databaseCms.sql("SELECT  `rid`,`permaLink`  FROM `" + db + "` WHERE `nurl` IS NULL and working='200' order by `rid` desc");
+        let r1 = await databaseCms.sql("SELECT  `movieName`,`rid`,`permaLink`  FROM `" + db + "` WHERE `nurl` IS NULL and working='200' order by `rid` desc");
         if (r1.length == 0) console.log(db + ' over')
         r1.map((v, i) => {
             let rid = v.rid
-            let gallery = urlSlug(v.permaLink)
-            let url = `/articles/movies/${rid}/${gallery}`
+            let gallery = v.permaLink?urlSlug(v.permaLink):`${urlSlug(v.movieName)}-telugucinema-cast-crew`
+            let url = `/movies/${rid}/${gallery}`
             if (url != '') {
                 let up = "UPDATE `" + db + "` SET `nurl` = '" + url + "' where rid=" + rid;
                 console.log(up)

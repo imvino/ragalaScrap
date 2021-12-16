@@ -73,9 +73,9 @@ async function gen(data, dbbid, webid,update=false) {
 
 }
 
-//gen('starzone_photos', 170406,170407,true,)
-//gen('starzone_photos', 170272,170407,false,)
-//rdate()
+
+gen('starzone_photos', 170570,170571,true)
+rdate()
 
 
 

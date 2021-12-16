@@ -74,3 +74,4 @@ typings/
 #.env.development
 #.env.production
 package-lock.json
+pnpm-lock.yaml
