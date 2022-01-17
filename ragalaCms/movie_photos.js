@@ -74,9 +74,8 @@ async function gen(data, dbbid, webid,update=false) {
 
 }
 
-//gen('movies_photos', 89699,89701,true,)
-gen('movies_photos', 89699,89701,false,)
-//rdate()
+//gen('movies_photos', 89703,89714,true)
+rdate()
 
 
 

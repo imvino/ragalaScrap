@@ -80,7 +80,7 @@ async function gen(data, dbbid,webid, extDate = false,update=false) {
 
 }
 
-gen('local_events_events', 188175,188193,true,true)
+gen('local_events_events', 188193,188223,false,false)
 
 
 

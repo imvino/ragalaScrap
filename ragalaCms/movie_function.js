@@ -74,7 +74,7 @@ async function gen(data, dbbid, webid, extDate = false,update=false) {
 
 }
 
-gen('movies_function', 123256,123275,true,true)
+gen('movies_function', 123275,123330,true,false)
 
 
 

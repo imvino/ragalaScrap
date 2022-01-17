@@ -3,12 +3,12 @@ const mysql = require('mysql2');
 const urlSlug = require('url-slug');
 // create the connection to database
 
-const con = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'ragalahari'
-});
+// const con = mysql.createConnection({
+//     host: 'localhost',
+//     user: 'root',
+//     password: '',
+//     database: 'ragalahari'
+// });
 
 const con_cms = mysql.createConnection({
     host: 'localhost',
@@ -17,15 +17,15 @@ const con_cms = mysql.createConnection({
     database: 'ragalacms'
 });
 
-database = async (condition) => {
-    const result = await con.promise().query(condition)
-        .then(([rows, fields]) => {
-            return rows;
-        })
-        .catch(console.log)
-    // .then( () => con.end());
-    return result
-};
+// database = async (condition) => {
+//     const result = await con.promise().query(condition)
+//         .then(([rows, fields]) => {
+//             return rows;
+//         })
+//         .catch(console.log)
+//     // .then( () => con.end());
+//     return result
+// };
 databaseCms = async (condition) => {
     const result = await con_cms.promise().query(condition)
         .then(([rows, fields]) => {
