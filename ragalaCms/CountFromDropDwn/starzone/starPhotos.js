@@ -1,7 +1,7 @@
 const core = require('../core_countList');
 
-let total = 8
-let split= 1
+let total = 560
+let split= 5
 let limit = Math.round(total/split)
 Array(split).fill(0).map((v,i)=>{
     let data = {
@@ -10,8 +10,9 @@ Array(split).fill(0).map((v,i)=>{
         gotoUrl: 'https://www.ragalahari.com/newadmin/starzoneinfo.aspx',
         editUrl: 'starzonenewaddedit.aspx?szid=',
         linkDatabase: 'starzone_photos',
-        logDatabase: 'url_log_starzone',
+        logDatabase: 'url_log', //url_log_starzone
         find: 'photos',
+        formatDate:true,
         limit: limit,
         offset: limit*i,
         array:i

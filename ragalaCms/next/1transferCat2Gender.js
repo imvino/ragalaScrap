@@ -40,14 +40,14 @@ databaseCms = async (condition) => {
 async function transferCat2Gender() {
     let rr1 = await databaseCms("SELECT DISTINCT(filmPersonalName) from `starzone_photos` WHERE  catgen IS NULL");
     rr1 = rr1.map(v => v.filmPersonalName).sort().reverse()
-    // console.log("SELECT  `rid`,`category` FROM `starzone_filmpersonal` WHERE `category` IS NOT NULL and rid in("+rr1.toString()+")")
+  console.log("SELECT  `rid`,`category` FROM `starzone_filmpersonal` WHERE `category` IS NOT NULL and rid in(1"+rr1.toString()+")")
     // return
     let r1 = await databaseCms("SELECT  `rid`,`category` FROM `starzone_filmpersonal` WHERE `category` IS NOT NULL and rid in(1" + rr1.toString() + ")");
     console.log('total', r1.length)
     r1.map(async v => {
         let up = "UPDATE `starzone_photos` SET `catgen` = '" + v['category'] + "' where filmPersonalName=" + v['rid'];
         console.log(up)
-        let r2 = databaseCms(up)
+        let r2 = await databaseCms(up)
         console.log(r2)
     })
 }

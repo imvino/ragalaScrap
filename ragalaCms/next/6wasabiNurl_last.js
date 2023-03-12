@@ -21,11 +21,11 @@ let delCount = 15;
 let counter = 0;
 let mailCounter = 0;
 let table = [
-    'starzone_photos',
-  //  'local_events_events',
- //   'movies_function',
+ //   'starzone_photos',
+   // 'local_events_events',
+   // 'movies_function',
   //   'movies_photos',
-    // 'movies_poster'
+     'movies_poster'
 ]
 const main = async (table) => {
     let bucket = ['img.ragalahari.com', 'media.ragalahari.com', 'starzone.ragalahari.com', 'imgcdn.ragalahari.com',

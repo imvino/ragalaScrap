@@ -32,7 +32,7 @@ async function gen(data, dbbid, webid,update=false) {
             console.log('not inserted')
         }
 
-        let total = rid.length ? rid.length : 150
+        let total = rid.length ? rid.length : 10
         let split = 1
         let limit = Math.round(total / split)
         if(!update){
@@ -74,7 +74,7 @@ async function gen(data, dbbid, webid,update=false) {
 }
 
 
-//gen('starzone_photos', 170726,170891,true)
+ //gen('starzone_photos', 170940,170950,true)
 rdate()
 
 

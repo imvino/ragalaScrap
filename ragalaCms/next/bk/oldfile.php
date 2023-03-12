@@ -11,8 +11,8 @@ function update2newCol()
     $tables = [
         // 'local_events_events' => ['path','imageAltText','imageTitleText','homepageTitleText','homepageTitleDropdown','addedDate','noOfPhotosPages','wasabi'],
         //'movies_function' => ['path', 'imageAltText', 'imageTitleText', 'homepageTitleText', 'homepageTitleDropdown', 'updatedDateTime', 'noOfPhotosPages', 'wasabi'],
-       // 'movies_photos' => ['path', 'imageAltText', 'imageTitleText', 'homepageTitleText', 'homepageTitleDropdown', 'updatedDateTime', 'noOfPhotosPages', 'wasabi'],
-       // 'starzone_photos' => ['path', 'imageAltText', 'imageTitleText', 'homepageTitleText', 'homepageTitleDropdown', 'addedDateTime', 'noOfPhotosPages', 'galleryType','wasabi'],
+        // 'movies_photos' => ['path', 'imageAltText', 'imageTitleText', 'homepageTitleText', 'homepageTitleDropdown', 'updatedDateTime', 'noOfPhotosPages', 'wasabi'],
+        // 'starzone_photos' => ['path', 'imageAltText', 'imageTitleText', 'homepageTitleText', 'homepageTitleDropdown', 'addedDateTime', 'noOfPhotosPages', 'galleryType','wasabi'],
 
     ];
 
@@ -45,20 +45,19 @@ function update2newCol()
 }
 
 function transferCat2Gender(){
-	echo 	'sdfsdfs';
-	 $sel1 = "SELECT  `rid`,`category` FROM `starzone_filmpersonal` WHERE `category` IS NOT NULL order by `rid` desc";
-	 $q1 = mysqli_query($GLOBALS['con'], $sel1) or die(mysqli_error($GLOBALS['con']));
-            while ($r1 = mysqli_fetch_assoc($q1)) {
-				 $up = "UPDATE `starzone_photos` SET `catgen` = '" . mysqli_real_escape_string($GLOBALS['con_cms'], $r1['category']) . "' where filmPersonalName={$r1['rid']} ";
-				echo  $up.'<br>';
-				mysqli_query($GLOBALS['con_cms'], $up) or die(mysqli_error($GLOBALS['con_cms']));
-			}
+    echo 	'sdfsdfs';
+    $sel1 = "SELECT  `rid`,`category` FROM `starzone_filmpersonal` WHERE `category` IS NOT NULL order by `rid` desc";
+    $q1 = mysqli_query($GLOBALS['con'], $sel1) or die(mysqli_error($GLOBALS['con']));
+    while ($r1 = mysqli_fetch_assoc($q1)) {
+        $up = "UPDATE `starzone_photos` SET `catgen` = '" . mysqli_real_escape_string($GLOBALS['con_cms'], $r1['category']) . "' where filmPersonalName={$r1['rid']} ";
+        echo  $up.'<br>';
+        mysqli_query($GLOBALS['con_cms'], $up) or die(mysqli_error($GLOBALS['con_cms']));
+    }
 
 }
 transferCat2Gender()
 
 ?>
-
 
 
 

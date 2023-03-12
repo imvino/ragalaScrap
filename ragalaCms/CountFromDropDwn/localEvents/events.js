@@ -1,7 +1,7 @@
 const core = require('../core_countList');
 
-let total = 2965
-let split= 5
+let total = 1
+let split= 1
 let limit = Math.round(total/split)
 Array(split).fill(0).map((v,i)=>{
     let data = {
@@ -10,8 +10,9 @@ Array(split).fill(0).map((v,i)=>{
         gotoUrl: 'https://www.ragalahari.com/newadmin/LocalEventsInfo.aspx',
         editUrl: 'LocalEventsNewAddEdit.aspx?fid=',
         linkDatabase: 'local_events_events',
-        logDatabase: 'url_log_local',
+        logDatabase: 'url_log', //url_log_local
         find: 'events',
+        formatDate:true,
         limit: limit,
         offset: limit*i,
         array:i

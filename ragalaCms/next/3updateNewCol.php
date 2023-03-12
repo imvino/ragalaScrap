@@ -164,15 +164,15 @@ function updateNewColArray()
     // linkdb, ref,
     // mref,maincol
     $table = [
-      'articles_news' => ['link_articles_news_starzone_filmpersonal', 'starzone_filmpersonal_rid', 'articles_news_rid', 'filmPersonals',],
-  //    'local_events_events' => ['link_local_events_events_starzone_filmpersonal', 'starzone_filmpersonal_rid', 'local_events_events_rid', 'filmPersonals',],
-  //   'movies_names_title' => ['link_movies_names_title_starzone_filmpersonal', 'starzone_filmpersonal_rid', 'movies_names_title_rid', 'filmPersonals',],
-   //   'starzone_filmpersonal' => ['link_starzone_filmpersonal_starzone_filmpersonal_category', 'starzone_filmpersonal_category_rid', 'starzone_filmpersonal_rid', 'category',],
+    //  'articles_news' => ['link_articles_news_starzone_filmpersonal', 'starzone_filmpersonal_rid', 'articles_news_rid', 'filmPersonals',],
+      'local_events_events' => ['link_local_events_events_starzone_filmpersonal', 'starzone_filmpersonal_rid', 'local_events_events_rid', 'filmPersonals',],
+   // 'movies_names_title' => ['link_movies_names_title_starzone_filmpersonal', 'starzone_filmpersonal_rid', 'movies_names_title_rid', 'filmPersonals',],
+    //  'starzone_filmpersonal' => ['link_starzone_filmpersonal_starzone_filmpersonal_category', 'starzone_filmpersonal_category_rid', 'starzone_filmpersonal_rid', 'category',],
     ];
 
     foreach ($table as $tbl => $k) {
         $m1=  mysqli_query($GLOBALS['con_cms'],"SELECT max(rid) FROM `$tbl` WHERE 1") or die(mysqli_error($GLOBALS['con_cms']));
-        $rm1 = mysqli_fetch_assoc($m1); $rid=($rm1['max(rid)']-200);
+        $rm1 = mysqli_fetch_assoc($m1); $rid=($rm1['max(rid)']-1000);
         $sel1 = "SELECT rid, `$k[3]` FROM `$tbl` where  `$k[3]` is not null  and rid > $rid ";
  //       $sel1 = "SELECT rid, `$k[3]` FROM `$tbl` where  `$k[3]` is not null order by rid desc ";
         echo $sel1 . "<br>";

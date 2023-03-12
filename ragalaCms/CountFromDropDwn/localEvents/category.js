@@ -1,8 +1,8 @@
 const {chromium} = require('playwright');
-const sendMail = require('../../components/sendmail');
-const database = require('../../components/model');
-const timer = require('../../components/timer');
-const user = require('../../components/login');
+const sendMail = require('../../../components/sendmail');
+const database = require('../../../components/model');
+const timer = require('../../../components/timer');
+const user = require('../../../components/login');
 const log = require('log-to-file');
 
 const file = 'reviewUrl.log';

@@ -11,6 +11,7 @@ Array(split).fill(0).map((v,i)=>{
         editUrl: 'FunctionsNewAddEdit.aspx?fid=',
         linkDatabase: 'movies_function',
         logDatabase: 'url_log_movies',
+        formatDate:true,
         find: 'function',
         limit: limit,
         offset: limit*i,

@@ -4,7 +4,7 @@ const core = require('../ExtractData/Using_DB_rid/coreDataScrap');
 var format = require('../formatDT')
 let rid = [];
 
-async function gen(data, webid,extDate=false) {
+async function gen(data, webid) {
 
         let v = await database.sql("SELECT MAX( rid ) FROM `" + data + "`")
         v = v[0]['MAX( rid )'] + 1
@@ -23,7 +23,7 @@ async function gen(data, webid,extDate=false) {
         }
 
         let total = rid.length?rid.length:150
-    let split= 5
+    let split= 1
     let limit = Math.round(total/split)
     Array(split).fill(0).map((v,i)=> {
         let data = {
@@ -41,7 +41,7 @@ async function gen(data, webid,extDate=false) {
 
 }
 
-gen('movies_names_title', 96613,true)
+gen('movies_names_title', 96811)
 
 
 

@@ -1,6 +1,6 @@
 const core = require('../core_countList');
 
-let total = 45
+let total = 35
 let split= 1
 let limit = Math.round(total/split)
 Array(split).fill(0).map((v,i)=>{
@@ -10,10 +10,11 @@ Array(split).fill(0).map((v,i)=>{
         gotoUrl: 'https://www.ragalahari.com/newadmin/photogalleryinfo.aspx',
         editUrl: 'photogallerynewaddedit.aspx?pgid=',
         linkDatabase: 'movies_photos',
-        logDatabase: 'url_log_movies',
+        logDatabase: 'url_log', //url_log_movies
         find: 'photos',
         limit: limit,
         offset: limit*i,
+        formatDate:true,
         array:i,
         selector2:'td:nth-of-type(9)',
     }

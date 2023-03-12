@@ -39,7 +39,7 @@ async function gen(data, dbbid,webid, extDate = false,update=false) {
             console.log('not inserted')
         }
 
-        let total = rid.length ? rid.length : 150
+        let total = rid.length ? rid.length : 10
         let split = 1
         let limit = Math.round(total / split)
         if(!update){
@@ -80,7 +80,7 @@ async function gen(data, dbbid,webid, extDate = false,update=false) {
 
 }
 
-gen('local_events_events', 188223,188247,true,false)
+gen('local_events_events', 188650,188655,false,true)
 
 
 
