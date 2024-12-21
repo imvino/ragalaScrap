@@ -100,8 +100,10 @@ async function highlight(){
    })
 }
 
-//photoType('movies_photos')
-//starGender('starzone_photos')
-//genre()
-//highlight()
+// run all 1 by 1
+
+// photoType('movies_photos')
+// starGender('starzone_photos')
+// genre()
+// highlight()
 

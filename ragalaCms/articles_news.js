@@ -105,7 +105,7 @@ async function gen(data, webid,extDate=false) {
 
 }
 
-gen('articles_news', 168963, true)
+gen('articles_news', 172317, false)
 
 
 

@@ -164,8 +164,8 @@ function updateNewColArray()
     // linkdb, ref,
     // mref,maincol
     $table = [
-    //  'articles_news' => ['link_articles_news_starzone_filmpersonal', 'starzone_filmpersonal_rid', 'articles_news_rid', 'filmPersonals',],
-      'local_events_events' => ['link_local_events_events_starzone_filmpersonal', 'starzone_filmpersonal_rid', 'local_events_events_rid', 'filmPersonals',],
+      'articles_news' => ['link_articles_news_starzone_filmpersonal', 'starzone_filmpersonal_rid', 'articles_news_rid', 'filmPersonals',],
+//      'local_events_events' => ['link_local_events_events_starzone_filmpersonal', 'starzone_filmpersonal_rid', 'local_events_events_rid', 'filmPersonals',],
    // 'movies_names_title' => ['link_movies_names_title_starzone_filmpersonal', 'starzone_filmpersonal_rid', 'movies_names_title_rid', 'filmPersonals',],
     //  'starzone_filmpersonal' => ['link_starzone_filmpersonal_starzone_filmpersonal_category', 'starzone_filmpersonal_category_rid', 'starzone_filmpersonal_rid', 'category',],
     ];

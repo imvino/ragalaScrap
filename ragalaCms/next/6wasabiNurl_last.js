@@ -21,10 +21,10 @@ let delCount = 15;
 let counter = 0;
 let mailCounter = 0;
 let table = [
- //   'starzone_photos',
+   // 'starzone_photos',
    // 'local_events_events',
    // 'movies_function',
-  //   'movies_photos',
+   //  'movies_photos',
      'movies_poster'
 ]
 const main = async (table) => {

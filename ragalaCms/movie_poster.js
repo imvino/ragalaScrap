@@ -50,7 +50,7 @@ let rdate = async () => {
         formatDateTime:true
     })
 }
-//gen('movies_poster', 53258)
+// gen('movies_poster', 53332)
 rdate()
 
 
